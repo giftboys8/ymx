@@ -5,7 +5,8 @@ export const useCustomerDemandStore = defineStore('customerDemand', {
   state: () => ({
     customers: [
       { customer_id: 'C001', customer_name: '富士康裕展', contact_person: '张三', contact_info: '13800138000' },
-      { customer_id: 'C002', customer_name: '华为科技', contact_person: '李四', contact_info: '13900139000' }
+      { customer_id: 'C002', customer_name: '华为科技', contact_person: '李四', contact_info: '13900139000' },
+      { customer_id: 'C003', customer_name: '比亚迪', contact_person: '王五', contact_info: '13700139000' }
     ],
     demands: [
       { 
@@ -41,6 +42,11 @@ export const useCustomerDemandStore = defineStore('customerDemand', {
         material_code: 'SM001',
         material_name: '螺丝',
         type: '标准件'
+      },
+      {
+        material_code: 'KK001',
+        material_name: '卡扣',
+        type: '标准件'
       }
     ]
   }),
@@ -59,7 +65,9 @@ export const usePurchaseStore = defineStore('purchase', {
   state: () => ({
     suppliers: [
       { id: 'S001', company_name: '优质供应商A', address: '广东省深圳市', contact_person: '陈经理', phone: '13600136000', tax_id: '91440300MA5EYKUT9R', bank_account: '622848123456789', bank_name: '中国银行' },
-      { id: 'S002', company_name: '优质供应商B', address: '江苏省苏州市', contact_person: '林经理', phone: '13500135000', tax_id: '91320500MA5EYKUT8R', bank_account: '622848987654321', bank_name: '工商银行' }
+      { id: 'S002', company_name: '优质供应商B', address: '江苏省苏州市', contact_person: '林经理', phone: '13500135000', tax_id: '91320500MA5EYKUT8R', bank_account: '622848987654321', bank_name: '工商银行' },
+      { id: 'S003', company_name: '优质供应商C', address: '浙江省杭州市', contact_person: '赵经理', phone: '13400134000', tax_id: '9133010UT7R', bank_account: '622848888888888', bank_name: '农业银行' },
+      { id: 'S004', company_name: '优质供应商D', address: '北京市海淀区', contact_person: '周经理', phone: '13300133000', tax_id: '91110108MA5EYKUT7R', bank_account: '622848777777777', bank_name: '建设银行' }
     ],
     purchaseOrders: [
       {
