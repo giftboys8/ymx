@@ -15,7 +15,8 @@ const handleSelect = (key) => {
     <el-aside width="auto" class="aside">
       <div class="logo-container">
         <img src="./assets/vue.svg" class="logo" alt="Logo" />
-        <span v-if="!isCollapse" class="title">运美兴生产管理系统</span>
+        <span v-if="!isCollapse" class="title">运美兴</span>
+        <span class="subtitle">生产管理系统</span>
       </div>
       <el-menu
         :default-active="$route.path"
@@ -41,6 +42,10 @@ const handleSelect = (key) => {
           <el-icon><Check /></el-icon>
           <template #title>质检管理</template>
         </el-menu-item>
+        <el-menu-item index="/engineering">
+          <el-icon><Tools /></el-icon>
+          <template #title>工程调试</template>
+        </el-menu-item>
         <el-menu-item index="/production">
           <el-icon><SetUp /></el-icon>
           <template #title>生产排期</template>
@@ -48,10 +53,6 @@ const handleSelect = (key) => {
         <el-menu-item index="/outsourcing">
           <el-icon><Connection /></el-icon>
           <template #title>委外加工</template>
-        </el-menu-item>
-        <el-menu-item index="/engineering">
-          <el-icon><Tools /></el-icon>
-          <template #title>工程调试</template>
         </el-menu-item>
         <el-menu-item index="/material-in">
           <el-icon><Goods /></el-icon>
@@ -68,6 +69,10 @@ const handleSelect = (key) => {
         <el-menu-item index="/permission">
           <el-icon><Lock /></el-icon>
           <template #title>权限管理</template>
+        </el-menu-item>
+        <el-menu-item index="/reports">
+          <el-icon><Lock /></el-icon>
+          <template #title>报表下载</template>
         </el-menu-item>
       </el-menu>
       <div class="collapse-btn" @click="isCollapse = !isCollapse">
