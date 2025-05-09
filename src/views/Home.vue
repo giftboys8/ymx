@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { Warning, CircleClose, DataLine } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const activeIndex = ref('1')
@@ -46,8 +47,57 @@ const navigateTo = (path) => {
       <el-col :span="24">
         <el-card class="welcome-card">
           <div class="welcome-content">
-            <h1>欢迎使用生产管理系统</h1>
+            <h1>欢迎使用运美兴工厂智能管理系统</h1>
             <p>本系统提供完整的生产管理流程，从客户需求到成品出货的全流程管理</p>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="20" class="mt-20">
+      <el-col :span="24">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>制造现场痛点</span>
+            </div>
+          </template>
+          <div class="pain-points">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <div class="pain-point-card">
+                  <el-icon class="pain-point-icon"><Warning /></el-icon>
+                  <h3>管理不透明</h3>
+                  <ul class="pain-point-list">
+                    <li>生产进度无法实时监控</li>
+                    <li>物料批次难以动态追踪</li>
+                    <li>管理层决策缺乏数据支撑</li>
+                  </ul>
+                </div>
+              </el-col>
+              <el-col :span="8">
+                <div class="pain-point-card">
+                  <el-icon class="pain-point-icon"><CircleClose /></el-icon>
+                  <h3>质量追溯困难</h3>
+                  <ul class="pain-point-list">
+                    <li>工艺参数超限未及时告警</li>
+                    <li>不良品来源无法快速定位</li>
+                    <li>返修流程低效耗时</li>
+                  </ul>
+                </div>
+              </el-col>
+              <el-col :span="8">
+                <div class="pain-point-card">
+                  <el-icon class="pain-point-icon"><DataLine /></el-icon>
+                  <h3>数据采集低效</h3>
+                  <ul class="pain-point-list">
+                    <li>依赖人工记录易出错</li>
+                    <li>质检与生产数据未关联</li>
+                    <li>信息孤岛现象严重</li>
+                  </ul>
+                </div>
+              </el-col>
+            </el-row>
           </div>
         </el-card>
       </el-col>
@@ -193,6 +243,64 @@ const navigateTo = (path) => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
+}
+
+.pain-points {
+  padding: 20px 0;
+}
+
+.pain-point-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: 100%;
+  transition: all 0.3s;
+}
+
+.pain-point-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
+}
+
+.pain-point-icon {
+  font-size: 40px;
+  color: #f56c6c;
+  margin-bottom: 15px;
+}
+
+.pain-point-card h3 {
+  font-size: 18px;
+  color: #303133;
+  margin-bottom: 15px;
+}
+
+.pain-point-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.pain-point-list li {
+  color: #606266;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.pain-point-list li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background-color: #f56c6c;
+  border-radius: 50%;
 }
 
 .process-item {

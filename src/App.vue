@@ -14,9 +14,9 @@ const handleSelect = (key) => {
   <el-container class="layout-container">
     <el-aside width="auto" class="aside">
       <div class="logo-container">
-        <img src="./assets/vue.svg" class="logo" alt="Logo" />
-        <span v-if="!isCollapse" class="title">运美兴</span>
-        <span class="subtitle">生产管理系统</span>
+        <!-- <img src="./assets/vue.svg" class="logo" alt="Logo" /> -->
+        <span v-if="!isCollapse" class="title">运美兴</span><br>
+        <span class="subtitle">工厂智能管理系统</span>
       </div>
       <el-menu
         :default-active="$route.path"
@@ -141,10 +141,12 @@ html, body {
 }
 
 .logo-container {
-  height: 60px;
+  height: auto;
+  min-height: 60px;
   display: flex;
-  align-items: center;
-  padding: 0 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 20px;
   color: white;
   background-color: #002140;
 }
@@ -157,7 +159,7 @@ html, body {
 .title {
   font-size: 18px;
   font-weight: bold;
-  white-space: nowrap;
+  margin-right: 10px;
 }
 
 .el-menu-vertical:not(.el-menu--collapse) {
