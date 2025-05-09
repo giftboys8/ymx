@@ -15,7 +15,7 @@ const handleSelect = (key) => {
     <el-aside width="auto" class="aside">
       <div class="logo-container">
         <img src="./assets/vue.svg" class="logo" alt="Logo" />
-        <span v-if="!isCollapse" class="title">生产管理系统</span>
+        <span v-if="!isCollapse" class="title">运美兴生产管理系统</span>
       </div>
       <el-menu
         :default-active="$route.path"
