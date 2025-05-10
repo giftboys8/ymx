@@ -70,9 +70,9 @@ const handleSelect = (key) => {
           <el-icon><Lock /></el-icon>
           <template #title>权限管理</template>
         </el-menu-item>
-        <el-menu-item index="/reports">
-          <el-icon><Lock /></el-icon>
-          <template #title>报表下载</template>
+        <el-menu-item index="/report">
+          <el-icon><DataAnalysis /></el-icon>
+          <span>生产报告</span>
         </el-menu-item>
       </el-menu>
       <div class="collapse-btn" @click="isCollapse = !isCollapse">
