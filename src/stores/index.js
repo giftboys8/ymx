@@ -711,139 +711,293 @@ export const useQualityStore = defineStore('quality', {
     inspectionRecords: [
       {
         record_id: 'IR20230001',
-        product_code: 'M001',
+        product_code: 'CELL001',
+        product_name: '磷酸铁锂电芯',
         inspection_date: '2023-05-15',
-        inspector: 'IQC',
-        result: 'Pass'
+        inspection_type: 'IQC',
+        inspector: '张工程师',
+        batch_number: 'BATCH001',
+        sample_size: 50,
+        accepted_qty: 48,
+        rejected_qty: 2,
+        result: 'Pass',
+        remarks: '电芯容量测试合格，外观检查通过'
       },
       {
         record_id: 'IR20230002',
-        product_code: 'M002',
+        product_code: 'CELL002',
+        product_name: '三元锂电芯',
         inspection_date: '2023-05-16',
-        inspector: 'IQC',
-        result: 'Pass'
+        inspection_type: 'IQC',
+        inspector: '李工程师',
+        batch_number: 'BATCH002',
+        sample_size: 30,
+        accepted_qty: 30,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: '电压一致性良好，内阻符合标准'
       },
       {
         record_id: 'IR20230003',
-        product_code: 'M003',
+        product_code: 'MODULE001',
+        product_name: '电池模组',
         inspection_date: '2023-05-17',
-        inspector: 'IPQC',
-        result: 'Fail'
+        inspection_type: 'IPQC',
+        inspector: '王工程师',
+        batch_number: 'BATCH003',
+        sample_size: 20,
+        accepted_qty: 15,
+        rejected_qty: 5,
+        result: 'Fail',
+        remarks: '发现绝缘电阻不达标，需要返工'
       },
       {
         record_id: 'IR20230004',
-        product_code: 'M004',
+        product_code: 'PACK001',
+        product_name: '动力电池包',
         inspection_date: '2023-05-18',
-        inspector: 'OQC',
-        result: 'Pass'
+        inspection_type: 'OQC',
+        inspector: '赵工程师',
+        batch_number: 'BATCH004',
+        sample_size: 10,
+        accepted_qty: 10,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: 'BMS通信正常，热管理系统工作正常'
       },
       {
         record_id: 'IR20230005',
-        product_code: 'M005',
+        product_code: 'CELL003',
+        product_name: '钠离子电芯',
         inspection_date: '2023-05-19',
-        inspector: 'IQC',
-        result: 'Pass'
+        inspection_type: 'IQC',
+        inspector: '陈工程师',
+        batch_number: 'BATCH005',
+        sample_size: 40,
+        accepted_qty: 38,
+        rejected_qty: 2,
+        result: 'Pass',
+        remarks: '新型钠离子电芯性能稳定'
       },
       {
         record_id: 'IR20230006',
-        product_code: 'M006',
+        product_code: 'BMS001',
+        product_name: '电池管理系统',
         inspection_date: '2023-05-20',
-        inspector: 'IPQC',
-        result: 'Pass'
+        inspector: '孙工程师',
+        inspection_type: 'IPQC',
+        batch_number: 'BATCH006',
+        sample_size: 15,
+        accepted_qty: 15,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: 'BMS功能测试全部通过'
       },
       {
         record_id: 'IR20230007',
-        product_code: 'M007',
+        product_code: 'SEPARATOR001',
+        product_name: '隔膜材料',
         inspection_date: '2023-05-21',
-        inspector: 'OQC',
-        result: 'Fail'
+        inspection_type: 'OQC',
+        inspector: '周工程师',
+        batch_number: 'BATCH007',
+        sample_size: 100,
+        accepted_qty: 85,
+        rejected_qty: 15,
+        result: 'Fail',
+        remarks: '隔膜厚度不均匀，孔隙率不达标'
       },
       {
         record_id: 'IR20230008',
-        product_code: 'M008',
+        product_code: 'ELECTROLYTE001',
+        product_name: '电解液',
         inspection_date: '2023-05-22',
-        inspector: 'IQC',
-        result: 'Pass'
+        inspection_type: 'IQC',
+        inspector: '吴工程师',
+        batch_number: 'BATCH008',
+        sample_size: 25,
+        accepted_qty: 25,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: '电解液纯度和导电性符合要求'
       },
       {
         record_id: 'IR20230009',
-        product_code: 'M009',
+        product_code: 'CATHODE001',
+        product_name: '正极材料',
         inspection_date: '2023-05-23',
-        inspector: 'IPQC',
-        result: 'Pass'
+        inspection_type: 'IPQC',
+        inspector: '郑工程师',
+        batch_number: 'BATCH009',
+        sample_size: 35,
+        accepted_qty: 35,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: '正极材料粒度分布均匀，比容量达标'
       },
       {
         record_id: 'IR20230010',
-        product_code: 'M010',
+        product_code: 'ANODE001',
+        product_name: '负极材料',
         inspection_date: '2023-05-24',
-        inspector: 'OQC',
-        result: 'Pass'
+        inspection_type: 'OQC',
+        inspector: '黄工程师',
+        batch_number: 'BATCH010',
+        sample_size: 30,
+        accepted_qty: 30,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: '石墨负极材料结构稳定'
       },
       {
         record_id: 'IR20230011',
-        product_code: 'M011',
+        product_code: 'THERMAL001',
+        product_name: '热管理组件',
         inspection_date: '2023-05-25',
-        inspector: 'IQC',
-        result: 'Fail'
+        inspection_type: 'IQC',
+        inspector: '刘工程师',
+        batch_number: 'BATCH011',
+        sample_size: 20,
+        accepted_qty: 16,
+        rejected_qty: 4,
+        result: 'Fail',
+        remarks: '散热片焊接质量不合格'
       },
       {
         record_id: 'IR20230012',
-        product_code: 'M012',
+        product_code: 'CONNECTOR001',
+        product_name: '连接器组件',
         inspection_date: '2023-05-26',
-        inspector: 'IPQC',
-        result: 'Pass'
+        inspection_type: 'IPQC',
+        inspector: '马工程师',
+        batch_number: 'BATCH012',
+        sample_size: 50,
+        accepted_qty: 50,
+        rejected_qty: 0,
+        result: 'Pass',
+        remarks: '连接器接触电阻和绝缘性能良好'
       }
     ],
     defects: [
       {
         defect_id: 'DF20230001',
         record_id: 'IR20230003',
-        defect_type: '外观缺陷',
-        defect_description: '表面有划痕',
-        defect_level: '轻微',
-        quantity: 5,
-        location: 'A区域',
-        corrective_action: '重新抛光处理'
+        defect_type: '绝缘性能缺陷',
+        defect_description: '模组绝缘电阻低于100MΩ标准',
+        defect_level: '严重',
+        quantity: 3,
+        location: '模组连接端子',
+        corrective_action: '更换绝缘材料，重新装配'
       },
       {
         defect_id: 'DF20230002',
         record_id: 'IR20230003',
-        defect_description: '尺寸超差',
-        defect_type: '尺寸缺陷',
-        defect_level: '严重',
+        defect_type: '焊接缺陷',
+        defect_description: '电芯连接片焊接不牢固',
+        defect_level: '一般',
         quantity: 2,
-        location: 'B区域',
-        corrective_action: '返工重做'
+        location: '正负极连接片',
+        corrective_action: '重新焊接，加强工艺控制'
       },
       {
         defect_id: 'DF20230003',
         record_id: 'IR20230007',
-        defect_type: '功能缺陷',
-        defect_description: '散热效果不佳',
-        defect_level: '一般',
-        quantity: 3,
-        location: 'C区域',
-        corrective_action: '更换散热材料'
+        defect_type: '材料缺陷',
+        defect_description: '隔膜厚度不均匀，存在微孔堵塞',
+        defect_level: '严重',
+        quantity: 15,
+        location: '隔膜中心区域',
+        corrective_action: '更换隔膜供应商，优化生产工艺'
       },
       {
         defect_id: 'DF20230004',
-        record_id: 'IR20230011',
-        defect_type: '装配缺陷',
-        defect_description: '按键松动',
+        record_id: 'IR20230007',
+        defect_type: '孔隙率缺陷',
+        defect_description: '隔膜孔隙率低于40%标准要求',
         defect_level: '一般',
         quantity: 8,
-        location: 'D区域',
-        corrective_action: '重新装配'
+        location: '隔膜边缘区域',
+        corrective_action: '调整拉伸工艺参数'
       },
       {
         defect_id: 'DF20230005',
         record_id: 'IR20230011',
+        defect_type: '焊接质量缺陷',
+        defect_description: '散热片与基板焊接存在虚焊',
+        defect_level: '严重',
+        quantity: 4,
+        location: '散热片焊接点',
+        corrective_action: '重新焊接，提高焊接温度'
+      },
+      {
+        defect_id: 'DF20230006',
+        record_id: 'IR20230001',
+        defect_type: '容量不足',
+        defect_description: '电芯实际容量低于标称容量5%以上',
+        defect_level: '一般',
+        quantity: 2,
+        location: '电芯内部',
+        corrective_action: '调整活性物质配比，优化涂布工艺'
+      },
+      {
+        defect_id: 'DF20230007',
+        record_id: 'IR20230005',
         defect_type: '外观缺陷',
-        defect_description: '颜色不均匀',
+        defect_description: '电芯外壳表面有凹痕和划伤',
         defect_level: '轻微',
-        quantity: 12,
-        location: 'E区域',
-        corrective_action: '重新喷涂'
+        quantity: 2,
+        location: '电芯外壳',
+        corrective_action: '改进包装方式，加强运输保护'
+      },
+      {
+        defect_id: 'DF20230008',
+        record_id: 'IR20230004',
+        defect_type: 'BMS通信异常',
+        defect_description: 'CAN总线通信偶发性中断',
+        defect_level: '一般',
+        quantity: 1,
+        location: 'BMS主控板',
+        corrective_action: '检查线束连接，更新软件版本'
+      },
+      {
+        defect_id: 'DF20230009',
+        record_id: 'IR20230008',
+        defect_type: '电解液纯度',
+        defect_description: '电解液中检测到微量金属离子污染',
+        defect_level: '轻微',
+        quantity: 1,
+        location: '电解液样品',
+        corrective_action: '加强原料检验，改进净化工艺'
+      },
+      {
+        defect_id: 'DF20230010',
+        record_id: 'IR20230009',
+        defect_type: '粒度分布异常',
+        defect_description: '正极材料粒度分布不均匀，D50偏差较大',
+        defect_level: '一般',
+        quantity: 3,
+        location: '正极材料批次',
+        corrective_action: '优化球磨工艺，加强筛分控制'
+      },
+      {
+        defect_id: 'DF20230011',
+        record_id: 'IR20230012',
+        defect_type: '接触电阻异常',
+        defect_description: '连接器接触电阻超过规定值',
+        defect_level: '轻微',
+        quantity: 2,
+        location: '连接器触点',
+        corrective_action: '清洁触点表面，检查镀层质量'
+      },
+      {
+        defect_id: 'DF20230012',
+        record_id: 'IR20230002',
+        defect_type: '内阻异常',
+        defect_description: '电芯内阻超过0.5mΩ标准要求',
+        defect_level: '一般',
+        quantity: 1,
+        location: '电芯内部',
+        corrective_action: '检查电解液浸润性，优化极片压实密度'
       }
     ]
   }),

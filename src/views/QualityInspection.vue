@@ -16,11 +16,17 @@ const productOptions = ref([])
 // 加载数据
 onMounted(() => {
   inspectionRecordsData.value = qualityStore.inspectionRecords
-  // 从质检标准中获取产品信息
-  productOptions.value = qualityStore.inspectionStandards.map(item => ({
-    product_code: item.product_code,
-    product_name: `产品${item.product_code}`,
-  }))
+  // 从质检记录中获取产品信息
+  const uniqueProducts = new Map()
+  qualityStore.inspectionRecords.forEach(record => {
+    if (!uniqueProducts.has(record.product_code)) {
+      uniqueProducts.set(record.product_code, {
+        product_code: record.product_code,
+        product_name: record.product_name
+      })
+    }
+  })
+  productOptions.value = Array.from(uniqueProducts.values())
   // 初始化分页数据
   total.value = inspectionRecordsData.value.length
   defectTotal.value = 0
