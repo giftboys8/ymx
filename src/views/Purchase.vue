@@ -2,6 +2,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { usePurchaseStore } from '../stores'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import CommonPagination from '../components/CommonPagination.vue'
 
 // 获取采购管理状态
 const purchaseStore = usePurchaseStore()
@@ -22,10 +23,47 @@ onMounted(() => {
     material_name: `物料${item.material_id}`,
     material_code: item.material_id
   }))
+  // 初始化分页数据
+  total.value = purchaseOrdersData.value.length
+  itemTotal.value = 0
 })
 
 // 表格加载状态
 const tableLoading = ref(false)
+
+// 分页相关
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = ref(0)
+
+// 明细分页相关
+const itemCurrentPage = ref(1)
+const itemPageSize = ref(10)
+const itemTotal = ref(0)
+
+// 分页处理函数
+const handleSizeChange = (val) => {
+  pageSize.value = val
+  currentPage.value = 1
+  // 这里可以添加重新加载数据的逻辑
+}
+
+const handleCurrentChange = (val) => {
+  currentPage.value = val
+  // 这里可以添加重新加载数据的逻辑
+}
+
+// 明细分页处理函数
+const handleItemSizeChange = (val) => {
+  itemPageSize.value = val
+  itemCurrentPage.value = 1
+  // 这里可以添加重新加载明细数据的逻辑
+}
+
+const handleItemCurrentChange = (val) => {
+  itemCurrentPage.value = val
+  // 这里可以添加重新加载明细数据的逻辑
+}
 
 // 对话框可见性
 const orderDialogVisible = ref(false)
@@ -364,6 +402,15 @@ const changeOrderStatus = (row, status) => {
           </template>
         </el-table-column>
       </el-table>
+      
+      <!-- 分页 -->
+      <CommonPagination
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </el-card>
     
     <!-- 采购明细 -->
@@ -413,6 +460,15 @@ const changeOrderStatus = (row, status) => {
           </template>
         </el-table-column>
       </el-table>
+      
+      <!-- 明细分页 -->
+      <CommonPagination
+        :current-page="itemCurrentPage"
+        :page-size="itemPageSize"
+        :total="itemTotal"
+        @size-change="handleItemSizeChange"
+        @current-change="handleItemCurrentChange"
+      />
     </el-card>
     
     <!-- 新增采购单对话框 -->

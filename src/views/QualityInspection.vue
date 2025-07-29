@@ -2,6 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useQualityStore } from '../stores'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+import CommonPagination from '../components/CommonPagination.vue'
 
 // 获取质检管理状态
 const qualityStore = useQualityStore()
@@ -19,10 +21,47 @@ onMounted(() => {
     product_code: item.product_code,
     product_name: `产品${item.product_code}`,
   }))
+  // 初始化分页数据
+  total.value = inspectionRecordsData.value.length
+  defectTotal.value = 0
 })
 
 // 表格加载状态
 const tableLoading = ref(false)
+
+// 分页相关
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = ref(0)
+
+// 缺陷分页相关
+const defectCurrentPage = ref(1)
+const defectPageSize = ref(10)
+const defectTotal = ref(0)
+
+// 分页处理函数
+const handleSizeChange = (val) => {
+  pageSize.value = val
+  currentPage.value = 1
+  // 这里可以添加重新加载数据的逻辑
+}
+
+const handleCurrentChange = (val) => {
+  currentPage.value = val
+  // 这里可以添加重新加载数据的逻辑
+}
+
+// 缺陷分页处理函数
+const handleDefectSizeChange = (val) => {
+  defectPageSize.value = val
+  defectCurrentPage.value = 1
+  // 这里可以添加重新加载缺陷数据的逻辑
+}
+
+const handleDefectCurrentChange = (val) => {
+  defectCurrentPage.value = val
+  // 这里可以添加重新加载缺陷数据的逻辑
+}
 
 // 对话框可见性
 const recordDialogVisible = ref(false)
@@ -362,6 +401,15 @@ const changeRecordResult = (row, result) => {
           </template>
         </el-table-column>
       </el-table>
+      
+      <!-- 分页 -->
+      <CommonPagination
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </el-card>
     
     <!-- 缺陷记录 -->
@@ -406,6 +454,15 @@ const changeRecordResult = (row, result) => {
           </template>
         </el-table-column>
       </el-table>
+      
+      <!-- 缺陷分页 -->
+      <CommonPagination
+        :current-page="defectCurrentPage"
+        :page-size="defectPageSize"
+        :total="defectTotal"
+        @size-change="handleDefectSizeChange"
+        @current-change="handleDefectCurrentChange"
+      />
     </el-card>
     
     <!-- 新增质检记录对话框 -->

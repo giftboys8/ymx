@@ -324,6 +324,71 @@ export default {
         expectedReturnDate: '2023-06-05',
         status: 'rework',
         requirements: '按照图纸要求加工，确保尺寸精度'
+      },
+      {
+        id: 'OO-2023-006',
+        orderId: 'OO-2023-006',
+        processorId: 'P006',
+        processorName: '宁德时代委外加工',
+        materialCode: 'BAT-CELL-001',
+        materialName: '18650锂电芯',
+        quantity: 10000,
+        orderDate: '2023-05-22',
+        expectedReturnDate: '2023-06-08',
+        status: 'processing',
+        requirements: '严格按照电池安全标准生产，确保容量一致性'
+      },
+      {
+        id: 'OO-2023-007',
+        orderId: 'OO-2023-007',
+        processorId: 'P007',
+        processorName: '比亚迪电池代工厂',
+        materialCode: 'BAT-PACK-001',
+        materialName: '动力电池包外壳',
+        quantity: 500,
+        orderDate: '2023-05-25',
+        expectedReturnDate: '2023-06-12',
+        status: 'completed',
+        requirements: '铝合金材质，防护等级IP67，通过碰撞测试'
+      },
+      {
+        id: 'OO-2023-008',
+        orderId: 'OO-2023-008',
+        processorId: 'P008',
+        processorName: '中航锂电委外部',
+        materialCode: 'BAT-MODULE-001',
+        materialName: '电池模组连接片',
+        quantity: 2000,
+        orderDate: '2023-05-28',
+        expectedReturnDate: '2023-06-15',
+        status: 'accepted',
+        requirements: '铜镍复合材料，导电性能优良，耐腐蚀'
+      },
+      {
+        id: 'OO-2023-009',
+        orderId: 'OO-2023-009',
+        processorId: 'P009',
+        processorName: '国轩高科代工厂',
+        materialCode: 'BAT-BMS-001',
+        materialName: 'BMS电路板',
+        quantity: 800,
+        orderDate: '2023-06-01',
+        expectedReturnDate: '2023-06-20',
+        status: 'pending',
+        requirements: 'SMT贴片工艺，通过EMC测试，符合车规级标准'
+      },
+      {
+        id: 'OO-2023-010',
+        orderId: 'OO-2023-010',
+        processorId: 'P010',
+        processorName: '欣旺达委外工厂',
+        materialCode: 'BAT-THERMAL-001',
+        materialName: '导热硅胶片',
+        quantity: 5000,
+        orderDate: '2023-06-03',
+        expectedReturnDate: '2023-06-18',
+        status: 'processing',
+        requirements: '导热系数≥3.0W/mK，厚度公差±0.1mm'
       }
     ])
 
@@ -333,14 +398,34 @@ export default {
       { id: 'P002', name: '裕展精密科技' },
       { id: 'P003', name: '鸿海精密工业' },
       { id: 'P004', name: '立讯精密工业' },
-      { id: 'P005', name: '和硕联合科技' }
+      { id: 'P005', name: '和硕联合科技' },
+      { id: 'P006', name: '宁德时代委外加工' },
+      { id: 'P007', name: '比亚迪电池代工厂' },
+      { id: 'P008', name: '中航锂电委外部' },
+      { id: 'P009', name: '国轩高科代工厂' },
+      { id: 'P010', name: '欣旺达委外工厂' },
+      { id: 'P011', name: '孚能科技代工厂' },
+      { id: 'P012', name: '蜂巢能源委外部' }
     ]
 
     // 物料列表
     const materials = [
       { code: '1B3894W00-600-G', name: '底框', type: 'DM6' },
       { code: '1B48QBT02-600-G', name: '253摄像头弹片', type: 'DM6' },
-      { code: '1C38Q4W00-600-G', name: '三角挂钩', type: 'DM6' }
+      { code: '1C38Q4W00-600-G', name: '三角挂钩', type: 'DM6' },
+      { code: 'BAT-CELL-001', name: '18650锂电芯', type: '电芯' },
+      { code: 'BAT-CELL-002', name: '21700锂电芯', type: '电芯' },
+      { code: 'BAT-CELL-003', name: '32650磷酸铁锂电芯', type: '电芯' },
+      { code: 'BAT-PACK-001', name: '动力电池包外壳', type: '结构件' },
+      { code: 'BAT-PACK-002', name: '储能电池包外壳', type: '结构件' },
+      { code: 'BAT-MODULE-001', name: '电池模组连接片', type: '连接件' },
+      { code: 'BAT-MODULE-002', name: '电池模组支架', type: '结构件' },
+      { code: 'BAT-BMS-001', name: 'BMS电路板', type: '电子件' },
+      { code: 'BAT-BMS-002', name: 'BMS主控板', type: '电子件' },
+      { code: 'BAT-THERMAL-001', name: '导热硅胶片', type: '辅料' },
+      { code: 'BAT-THERMAL-002', name: '导热垫片', type: '辅料' },
+      { code: 'BAT-SAFETY-001', name: '防爆阀', type: '安全件' },
+      { code: 'BAT-SAFETY-002', name: '熔断器', type: '安全件' }
     ]
 
     // 计算总订单数

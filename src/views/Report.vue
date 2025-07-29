@@ -89,7 +89,7 @@
     <!-- 数据表格区域 -->
     <el-tabs v-model="activeTab" class="data-tabs">
       <el-tab-pane label="客户需求数据" name="demand">
-        <el-table :data="demandTableData" border style="width: 100%" v-loading="tableLoading">
+        <el-table :data="paginatedDemandData" border style="width: 100%" v-loading="tableLoading">
           <el-table-column prop="demand_no" label="需求单号" width="120" />
           <el-table-column prop="customer_name" label="客户名称" width="150" />
           <el-table-column prop="material_name" label="物料名称" width="150" />
@@ -103,9 +103,17 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          v-model:current-page="demandCurrentPage"
+          v-model:page-size="demandPageSize"
+          :page-sizes="[5, 10, 20, 50]"
+          :total="demandTableData.length"
+          layout="total, sizes, prev, pager, next, jumper"
+          style="margin-top: 20px; justify-content: center;"
+        />
       </el-tab-pane>
       <el-tab-pane label="生产计划数据" name="production">
-        <el-table :data="productionTableData" border style="width: 100%" v-loading="tableLoading">
+        <el-table :data="paginatedProductionData" border style="width: 100%" v-loading="tableLoading">
           <el-table-column prop="process_id" label="制程ID" width="120" />
           <el-table-column prop="material_name" label="物料名称" width="150" />
           <el-table-column prop="material_code" label="物料编码" width="150" />
@@ -123,9 +131,17 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          v-model:current-page="productionCurrentPage"
+          v-model:page-size="productionPageSize"
+          :page-sizes="[5, 10, 20, 50]"
+          :total="productionTableData.length"
+          layout="total, sizes, prev, pager, next, jumper"
+          style="margin-top: 20px; justify-content: center;"
+        />
       </el-tab-pane>
       <el-tab-pane label="出货数据" name="shipment">
-        <el-table :data="shipmentTableData" border style="width: 100%" v-loading="tableLoading">
+        <el-table :data="paginatedShipmentData" border style="width: 100%" v-loading="tableLoading">
           <el-table-column prop="plan_id" label="计划ID" width="120" />
           <el-table-column prop="material_code" label="物料编码" width="150" />
           <el-table-column prop="material_name" label="物料名称" width="150" />
@@ -139,9 +155,17 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          v-model:current-page="shipmentCurrentPage"
+          v-model:page-size="shipmentPageSize"
+          :page-sizes="[5, 10, 20, 50]"
+          :total="shipmentTableData.length"
+          layout="total, sizes, prev, pager, next, jumper"
+          style="margin-top: 20px; justify-content: center;"
+        />
       </el-tab-pane>
       <el-tab-pane label="质检数据" name="quality">
-        <el-table :data="qualityTableData" border style="width: 100%" v-loading="tableLoading">
+        <el-table :data="paginatedQualityData" border style="width: 100%" v-loading="tableLoading">
           <el-table-column prop="inspection_id" label="检验ID" width="120" />
           <el-table-column prop="inspection_type" label="检验类型" width="100">
             <template #default="{ row }">
@@ -161,13 +185,21 @@
           </el-table-column>
           <el-table-column prop="inspector" label="检验员" width="100" />
         </el-table>
+        <el-pagination
+          v-model:current-page="qualityCurrentPage"
+          v-model:page-size="qualityPageSize"
+          :page-sizes="[5, 10, 20, 50]"
+          :total="qualityTableData.length"
+          layout="total, sizes, prev, pager, next, jumper"
+          style="margin-top: 20px; justify-content: center;"
+        />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, reactive, onMounted, nextTick, computed } from 'vue'
 import { Document, SetUp, Van, CircleCheck } from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
 
@@ -199,100 +231,186 @@ const overviewData = ref([
   { label: '质检合格率', value: '96.5%', icon: 'CircleCheck', color: '#F56C6C' }
 ])
 
+// 分页相关数据
+const demandCurrentPage = ref(1)
+const demandPageSize = ref(10)
+const productionCurrentPage = ref(1)
+const productionPageSize = ref(10)
+const shipmentCurrentPage = ref(1)
+const shipmentPageSize = ref(10)
+const qualityCurrentPage = ref(1)
+const qualityPageSize = ref(10)
+
 // 表格数据
 const tableLoading = ref(false)
 const activeTab = ref('demand')
 
+// 分页计算属性
+const paginatedDemandData = computed(() => {
+  const start = (demandCurrentPage.value - 1) * demandPageSize.value
+  const end = start + demandPageSize.value
+  return demandTableData.value.slice(start, end)
+})
+
+const paginatedProductionData = computed(() => {
+  const start = (productionCurrentPage.value - 1) * productionPageSize.value
+  const end = start + productionPageSize.value
+  return productionTableData.value.slice(start, end)
+})
+
+const paginatedShipmentData = computed(() => {
+  const start = (shipmentCurrentPage.value - 1) * shipmentPageSize.value
+  const end = start + shipmentPageSize.value
+  return shipmentTableData.value.slice(start, end)
+})
+
+const paginatedQualityData = computed(() => {
+  const start = (qualityCurrentPage.value - 1) * qualityPageSize.value
+  const end = start + qualityPageSize.value
+  return qualityTableData.value.slice(start, end)
+})
+
 // 产品列表
 const productList = ref([
-  { code: 'DM6-001', name: 'DM6底框' },
-  { code: 'DM6-002', name: 'DM6摄像头弹片' },
-  { code: 'DM6-003', name: 'DM6三角挂钩' }
+  { code: 'CELL001', name: '18650锂离子电芯' },
+  { code: 'CELL002', name: '21700锂离子电芯' },
+  { code: 'MODULE001', name: '12V 100Ah电池模组' },
+  { code: 'PACK001', name: '48V 200Ah储能电池包' }
 ])
 
 // 客户需求数据
 const demandTableData = ref([
   {
-    demand_no: 'D20230501001',
-    customer_name: '富士康裕展',
-    material_name: 'DM6底框',
-    material_code: 'DM6-001',
-    delivery_date: '2023-05-10',
-    required_qty: 5000,
-    completed_qty: 5000,
-    completion_rate: 100
+    demand_no: 'D20230601001',
+    customer_name: '宁德时代新能源',
+    material_name: '18650锂离子电芯',
+    material_code: 'CELL001',
+    delivery_date: '2023-06-15',
+    required_qty: 50000,
+    completed_qty: 49800,
+    completion_rate: 99.6
   },
   {
-    demand_no: 'D20230501002',
-    customer_name: '富士康裕展',
-    material_name: 'DM6摄像头弹片',
-    material_code: 'DM6-002',
-    delivery_date: '2023-05-12',
-    required_qty: 8000,
-    completed_qty: 7200,
-    completion_rate: 90
+    demand_no: 'D20230602001',
+    customer_name: '比亚迪电池',
+    material_name: '21700锂离子电芯',
+    material_code: 'CELL002',
+    delivery_date: '2023-06-18',
+    required_qty: 30000,
+    completed_qty: 29500,
+    completion_rate: 98.3
   },
   {
-    demand_no: 'D20230501003',
-    customer_name: '富士康裕展',
-    material_name: 'DM6三角挂钩',
-    material_code: 'DM6-003',
-    delivery_date: '2023-05-15',
-    required_qty: 10000,
-    completed_qty: 8500,
-    completion_rate: 85
+    demand_no: 'D20230603001',
+    customer_name: '中航锂电',
+    material_name: '12V 100Ah电池模组',
+    material_code: 'MODULE001',
+    delivery_date: '2023-06-20',
+    required_qty: 2000,
+    completed_qty: 1950,
+    completion_rate: 97.5
+  },
+  {
+    demand_no: 'D20230604001',
+    customer_name: '国轩高科',
+    material_name: '48V 200Ah储能电池包',
+    material_code: 'PACK001',
+    delivery_date: '2023-06-25',
+    required_qty: 500,
+    completed_qty: 485,
+    completion_rate: 97.0
+  },
+  {
+    demand_no: 'D20230605001',
+    customer_name: '欣旺达电子',
+    material_name: 'BMS电池管理系统',
+    material_code: 'BMS001',
+    delivery_date: '2023-06-28',
+    required_qty: 1000,
+    completed_qty: 980,
+    completion_rate: 98.0
   }
 ])
 
 // 生产计划数据
 const productionTableData = ref([
   {
-    process_id: 'P20230505001',
-    material_name: 'DM6底框',
-    material_code: 'DM6-001',
-    plan_date: '2023-05-05',
-    planned_qty: 2000,
-    actual_qty: 1950,
+    process_id: 'P20230610001',
+    material_name: '18650锂离子电芯',
+    material_code: 'CELL001',
+    plan_date: '2023-06-10',
+    planned_qty: 25000,
+    actual_qty: 24800,
+    yield_rate: 99.2,
+    status: '已完成'
+  },
+  {
+    process_id: 'P20230611001',
+    material_name: '18650锂离子电芯',
+    material_code: 'CELL001',
+    plan_date: '2023-06-11',
+    planned_qty: 25000,
+    actual_qty: 25000,
+    yield_rate: 100.0,
+    status: '已完成'
+  },
+  {
+    process_id: 'P20230612001',
+    material_name: '21700锂离子电芯',
+    material_code: 'CELL002',
+    plan_date: '2023-06-12',
+    planned_qty: 15000,
+    actual_qty: 14750,
+    yield_rate: 98.3,
+    status: '已完成'
+  },
+  {
+    process_id: 'P20230613001',
+    material_name: '21700锂离子电芯',
+    material_code: 'CELL002',
+    plan_date: '2023-06-13',
+    planned_qty: 15000,
+    actual_qty: 14750,
+    yield_rate: 98.3,
+    status: '已完成'
+  },
+  {
+    process_id: 'P20230615001',
+    material_name: '12V 100Ah电池模组',
+    material_code: 'MODULE001',
+    plan_date: '2023-06-15',
+    planned_qty: 1000,
+    actual_qty: 975,
     yield_rate: 97.5,
     status: '已完成'
   },
   {
-    process_id: 'P20230506001',
-    material_name: 'DM6底框',
-    material_code: 'DM6-001',
-    plan_date: '2023-05-06',
-    planned_qty: 3000,
-    actual_qty: 3000,
-    yield_rate: 98.2,
+    process_id: 'P20230616001',
+    material_name: '12V 100Ah电池模组',
+    material_code: 'MODULE001',
+    plan_date: '2023-06-16',
+    planned_qty: 1000,
+    actual_qty: 975,
+    yield_rate: 97.5,
     status: '已完成'
   },
   {
-    process_id: 'P20230507001',
-    material_name: 'DM6摄像头弹片',
-    material_code: 'DM6-002',
-    plan_date: '2023-05-07',
-    planned_qty: 4000,
-    actual_qty: 3800,
-    yield_rate: 95.0,
+    process_id: 'P20230618001',
+    material_name: '48V 200Ah储能电池包',
+    material_code: 'PACK001',
+    plan_date: '2023-06-18',
+    planned_qty: 250,
+    actual_qty: 245,
+    yield_rate: 98.0,
     status: '已完成'
   },
   {
-    process_id: 'P20230508001',
-    material_name: 'DM6摄像头弹片',
-    material_code: 'DM6-002',
-    plan_date: '2023-05-08',
-    planned_qty: 4000,
-    actual_qty: 3400,
-    yield_rate: 94.5,
-    status: '已完成'
-  },
-  {
-    process_id: 'P20230510001',
-    material_name: 'DM6三角挂钩',
-    material_code: 'DM6-003',
-    plan_date: '2023-05-10',
-    planned_qty: 5000,
-    actual_qty: 4800,
+    process_id: 'P20230619001',
+    material_name: '48V 200Ah储能电池包',
+    material_code: 'PACK001',
+    plan_date: '2023-06-19',
+    planned_qty: 250,
+    actual_qty: 240,
     yield_rate: 96.0,
     status: '已完成'
   }
@@ -301,33 +419,53 @@ const productionTableData = ref([
 // 出货数据
 const shipmentTableData = ref([
   {
-    plan_id: 'S20230510001',
-    material_code: 'DM6-001',
-    material_name: 'DM6底框',
-    shipment_date: '2023-05-10',
-    planned_qty: 5000,
-    actual_qty: 5000,
-    customer: '富士康裕展',
+    plan_id: 'S20230615001',
+    material_code: 'CELL001',
+    material_name: '18650锂离子电芯',
+    shipment_date: '2023-06-15',
+    planned_qty: 50000,
+    actual_qty: 49800,
+    customer: '宁德时代新能源',
     status: '已完成'
   },
   {
-    plan_id: 'S20230512001',
-    material_code: 'DM6-002',
-    material_name: 'DM6摄像头弹片',
-    shipment_date: '2023-05-12',
-    planned_qty: 7200,
-    actual_qty: 7200,
-    customer: '富士康裕展',
+    plan_id: 'S20230618001',
+    material_code: 'CELL002',
+    material_name: '21700锂离子电芯',
+    shipment_date: '2023-06-18',
+    planned_qty: 30000,
+    actual_qty: 29500,
+    customer: '比亚迪电池',
     status: '已完成'
   },
   {
-    plan_id: 'S20230515001',
-    material_code: 'DM6-003',
-    material_name: 'DM6三角挂钩',
-    shipment_date: '2023-05-15',
-    planned_qty: 8500,
-    actual_qty: 8500,
-    customer: '富士康裕展',
+    plan_id: 'S20230620001',
+    material_code: 'MODULE001',
+    material_name: '12V 100Ah电池模组',
+    shipment_date: '2023-06-20',
+    planned_qty: 2000,
+    actual_qty: 1950,
+    customer: '中航锂电',
+    status: '已完成'
+  },
+  {
+    plan_id: 'S20230625001',
+    material_code: 'PACK001',
+    material_name: '48V 200Ah储能电池包',
+    shipment_date: '2023-06-25',
+    planned_qty: 500,
+    actual_qty: 485,
+    customer: '国轩高科',
+    status: '进行中'
+  },
+  {
+    plan_id: 'S20230628001',
+    material_code: 'BMS001',
+    material_name: 'BMS电池管理系统',
+    shipment_date: '2023-06-28',
+    planned_qty: 1000,
+    actual_qty: 980,
+    customer: '欣旺达电子',
     status: '进行中'
   }
 ])
@@ -335,64 +473,100 @@ const shipmentTableData = ref([
 // 质检数据
 const qualityTableData = ref([
   {
-    inspection_id: 'Q20230505001',
+    inspection_id: 'Q20230610001',
     inspection_type: 'IQC',
-    material_code: 'RM-001',
-    material_name: '铝合金板材',
-    batch_number: 'B20230505001',
-    inspection_date: '2023-05-05',
-    sample_size: 100,
-    defect_count: 2,
-    pass_rate: 98.0,
-    inspector: '张工'
-  },
-  {
-    inspection_id: 'Q20230506001',
-    inspection_type: 'IPQC',
-    material_code: 'DM6-001',
-    material_name: 'DM6底框',
-    batch_number: 'B20230506001',
-    inspection_date: '2023-05-06',
-    sample_size: 50,
-    defect_count: 1,
-    pass_rate: 98.0,
-    inspector: '李工'
-  },
-  {
-    inspection_id: 'Q20230507001',
-    inspection_type: 'OQC',
-    material_code: 'DM6-001',
-    material_name: 'DM6底框',
-    batch_number: 'B20230507001',
-    inspection_date: '2023-05-07',
+    material_code: 'LFP001',
+    material_name: '磷酸铁锂正极材料',
+    batch_number: 'LFP20230610',
+    inspection_date: '2023-06-10',
     sample_size: 200,
     defect_count: 3,
     pass_rate: 98.5,
-    inspector: '王工'
+    inspector: '张工程师'
   },
   {
-    inspection_id: 'Q20230508001',
-    inspection_type: 'IQC',
-    material_code: 'RM-002',
-    material_name: '弹簧钢丝',
-    batch_number: 'B20230508001',
-    inspection_date: '2023-05-08',
-    sample_size: 100,
-    defect_count: 5,
-    pass_rate: 95.0,
-    inspector: '张工'
-  },
-  {
-    inspection_id: 'Q20230509001',
+    inspection_id: 'Q20230611001',
     inspection_type: 'IPQC',
-    material_code: 'DM6-002',
-    material_name: 'DM6摄像头弹片',
-    batch_number: 'B20230509001',
-    inspection_date: '2023-05-09',
+    material_code: 'CELL001',
+    material_name: '18650锂离子电芯',
+    batch_number: 'CELL20230611',
+    inspection_date: '2023-06-11',
+    sample_size: 100,
+    defect_count: 1,
+    pass_rate: 99.0,
+    inspector: '李工程师'
+  },
+  {
+    inspection_id: 'Q20230612001',
+    inspection_type: 'OQC',
+    material_code: 'CELL001',
+    material_name: '18650锂离子电芯',
+    batch_number: 'CELL20230612',
+    inspection_date: '2023-06-12',
+    sample_size: 500,
+    defect_count: 5,
+    pass_rate: 99.0,
+    inspector: '王工程师'
+  },
+  {
+    inspection_id: 'Q20230613001',
+    inspection_type: 'IQC',
+    material_code: 'ELE001',
+    material_name: 'LiPF6电解液',
+    batch_number: 'ELE20230613',
+    inspection_date: '2023-06-13',
     sample_size: 50,
+    defect_count: 1,
+    pass_rate: 98.0,
+    inspector: '张工程师'
+  },
+  {
+    inspection_id: 'Q20230614001',
+    inspection_type: 'IPQC',
+    material_code: 'CELL002',
+    material_name: '21700锂离子电芯',
+    batch_number: 'CELL20230614',
+    inspection_date: '2023-06-14',
+    sample_size: 100,
     defect_count: 2,
-    pass_rate: 96.0,
-    inspector: '李工'
+    pass_rate: 98.0,
+    inspector: '李工程师'
+  },
+  {
+    inspection_id: 'Q20230615001',
+    inspection_type: 'OQC',
+    material_code: 'MODULE001',
+    material_name: '12V 100Ah电池模组',
+    batch_number: 'MOD20230615',
+    inspection_date: '2023-06-15',
+    sample_size: 20,
+    defect_count: 0,
+    pass_rate: 100.0,
+    inspector: '王工程师'
+  },
+  {
+    inspection_id: 'Q20230616001',
+    inspection_type: 'IQC',
+    material_code: 'SEP001',
+    material_name: 'PE隔膜材料',
+    batch_number: 'SEP20230616',
+    inspection_date: '2023-06-16',
+    sample_size: 100,
+    defect_count: 3,
+    pass_rate: 97.0,
+    inspector: '张工程师'
+  },
+  {
+    inspection_id: 'Q20230617001',
+    inspection_type: 'OQC',
+    material_code: 'PACK001',
+    material_name: '48V 200Ah储能电池包',
+    batch_number: 'PACK20230617',
+    inspection_date: '2023-06-17',
+    sample_size: 10,
+    defect_count: 0,
+    pass_rate: 100.0,
+    inspector: '王工程师'
   }
 ])
 
@@ -438,12 +612,12 @@ const initCharts = () => {
           trigger: 'axis'
         },
         legend: {
-          data: ['DM6底框', 'DM6摄像头弹片', 'DM6三角挂钩'],
+          data: ['18650锂离子电芯', '21700锂离子电芯', '电池模组', '储能电池包'],
           bottom: 10
         },
         xAxis: {
           type: 'category',
-          data: ['第1周', '第2周', '第3周', '第4周']
+          data: ['1月', '2月', '3月', '4月', '5月', '6月']
         },
         yAxis: {
           type: 'value',
@@ -451,19 +625,24 @@ const initCharts = () => {
         },
         series: [
           {
-            name: 'DM6底框',
+            name: '18650锂离子电芯',
             type: 'line',
-            data: [5000, 7000, 6000, 8000]
+            data: [45000, 48000, 52000, 49000, 51000, 55000]
           },
           {
-            name: 'DM6摄像头弹片',
+            name: '21700锂离子电芯',
             type: 'line',
-            data: [8000, 9000, 8500, 10000]
+            data: [28000, 30000, 32000, 31000, 29000, 33000]
           },
           {
-            name: 'DM6三角挂钩',
+            name: '电池模组',
             type: 'line',
-            data: [10000, 12000, 9000, 11000]
+            data: [1800, 2000, 2200, 2100, 1950, 2300]
+          },
+          {
+            name: '储能电池包',
+            type: 'line',
+            data: [450, 480, 520, 500, 470, 550]
           }
         ]
       }
@@ -490,7 +669,7 @@ const initCharts = () => {
         },
         xAxis: {
           type: 'category',
-          data: ['5月5日', '5月6日', '5月7日', '5月8日', '5月9日']
+          data: ['6月10日', '6月11日', '6月12日', '6月13日', '6月14日']
         },
         yAxis: {
           type: 'value',
@@ -500,12 +679,12 @@ const initCharts = () => {
           {
             name: '计划量',
             type: 'bar',
-            data: [2000, 3000, 4000, 4000, 5000]
+            data: [25000, 25000, 15000, 15000, 1000]
           },
           {
             name: '实际量',
             type: 'bar',
-            data: [1950, 3000, 3800, 3400, 4800]
+            data: [24800, 25000, 14750, 14750, 975]
           }
         ]
       }
@@ -517,31 +696,30 @@ const initCharts = () => {
       qualityChart = echarts.init(qualityChartRef.value)
       const qualityOption = {
         title: {
-          text: '质检合格率',
+          text: '质检通过率',
           left: 'center'
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
         },
-        legend: {
-          orient: 'vertical',
-          left: 'left'
+        xAxis: {
+          type: 'category',
+          data: ['IQC', 'IPQC', 'OQC']
+        },
+        yAxis: {
+          type: 'value',
+          max: 100
         },
         series: [
           {
-            name: '质检结果',
-            type: 'pie',
-            radius: '50%',
-            data: [
-              { value: 96.5, name: '合格' },
-              { value: 3.5, name: '不合格' }
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
+            name: '通过率',
+            type: 'bar',
+            data: [97.8, 98.3, 99.7],
+            itemStyle: {
+              color: '#67C23A'
             }
           }
         ]
@@ -569,7 +747,7 @@ const initCharts = () => {
         },
         xAxis: {
           type: 'category',
-          data: ['DM6底框', 'DM6摄像头弹片', 'DM6三角挂钩']
+          data: ['18650电芯', '21700电芯', '电池模组', '储能电池包', 'BMS系统']
         },
         yAxis: {
           type: 'value',
@@ -579,12 +757,12 @@ const initCharts = () => {
           {
             name: '计划出货量',
             type: 'bar',
-            data: [5000, 8000, 10000]
+            data: [50000, 30000, 2000, 500, 1000]
           },
           {
             name: '实际出货量',
             type: 'bar',
-            data: [5000, 7200, 8500]
+            data: [49800, 29500, 1950, 485, 980]
           }
         ]
       }

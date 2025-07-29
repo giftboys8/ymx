@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const router = useRouter()
 const isCollapse = ref(false)
 const isMobile = ref(false)
 const drawerVisible = ref(false)
+const username = ref('')
 
 // 检测是否为移动设备
 const checkMobile = () => {
@@ -23,6 +25,8 @@ const handleResize = () => {
 onMounted(() => {
   checkMobile()
   window.addEventListener('resize', handleResize)
+  // 获取用户名
+  username.value = localStorage.getItem('username') || '管理员'
 })
 
 onUnmounted(() => {
@@ -43,6 +47,54 @@ const toggleMobileMenu = () => {
     isCollapse.value = !isCollapse.value
   }
 }
+
+// 处理下拉菜单命令
+const handleCommand = (command) => {
+  switch (command) {
+    case 'profile':
+      ElMessage({
+        type: 'info',
+        message: '个人信息功能开发中...'
+      })
+      break
+    case 'password':
+      ElMessage({
+        type: 'info',
+        message: '修改密码功能开发中...'
+      })
+      break
+    case 'logout':
+      handleLogout()
+      break
+  }
+}
+
+// 退出登录
+const handleLogout = () => {
+  ElMessageBox.confirm(
+    '确定要退出登录吗？',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  ).then(() => {
+    // 清除登录状态
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('username')
+    
+    ElMessage({
+      type: 'success',
+      message: '已退出登录'
+    })
+    
+    // 跳转到登录页面
+    router.push('/login')
+  }).catch(() => {
+    // 取消退出
+  })
+}
 </script>
 
 <template>
@@ -52,7 +104,7 @@ const toggleMobileMenu = () => {
       <div class="logo-container">
         <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
         <span v-if="!isCollapse" class="title">典名</span><br>
-        <span class="subtitle">工厂智能管理系统</span>
+        <span class="subtitle">智能制造管理平台</span>
       </div>
       <el-menu
         :default-active="$route.path"
@@ -68,11 +120,11 @@ const toggleMobileMenu = () => {
         </el-menu-item>
         <el-menu-item index="/customer-demand">
           <el-icon><Document /></el-icon>
-          <template #title>客户需求计划</template>
+          <template #title>客户需求</template>
         </el-menu-item>
         <el-menu-item index="/purchase">
           <el-icon><ShoppingCart /></el-icon>
-          <template #title>采购管理</template>
+          <template #title>材料采购</template>
         </el-menu-item>
         <el-menu-item index="/quality-inspection">
           <el-icon><Check /></el-icon>
@@ -108,7 +160,7 @@ const toggleMobileMenu = () => {
         </el-menu-item>
         <el-menu-item index="/report">
           <el-icon><DataAnalysis /></el-icon>
-          <span>生产报告</span>
+          <template #title>生产报告</template>
         </el-menu-item>
       </el-menu>
       <div class="collapse-btn" @click="toggleMobileMenu">
@@ -129,7 +181,7 @@ const toggleMobileMenu = () => {
         <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
         <div class="mobile-title">
           <span class="title">典名</span>
-          <span class="subtitle">工厂智能管理系统</span>
+          <span class="subtitle">智能制造管理平台</span>
         </div>
       </div>
       <el-menu
@@ -145,11 +197,11 @@ const toggleMobileMenu = () => {
         </el-menu-item>
         <el-menu-item index="/customer-demand">
           <el-icon><Document /></el-icon>
-          <template #title>客户需求计划</template>
+          <template #title>客户需求</template>
         </el-menu-item>
         <el-menu-item index="/purchase">
           <el-icon><ShoppingCart /></el-icon>
-          <template #title>采购管理</template>
+          <template #title>材料采购</template>
         </el-menu-item>
         <el-menu-item index="/quality-inspection">
           <el-icon><Check /></el-icon>
@@ -185,7 +237,7 @@ const toggleMobileMenu = () => {
         </el-menu-item>
         <el-menu-item index="/report">
           <el-icon><DataAnalysis /></el-icon>
-          <span>生产报告</span>
+          <template #title>生产报告</template>
         </el-menu-item>
       </el-menu>
     </el-drawer>
@@ -206,16 +258,16 @@ const toggleMobileMenu = () => {
           </el-breadcrumb>
         </div>
         <div class="header-right">
-          <el-dropdown>
+          <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link">
-              管理员
+              {{ username || '管理员' }}
               <el-icon class="el-icon--right"><arrow-down /></el-icon>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>个人信息</el-dropdown-item>
-                <el-dropdown-item>修改密码</el-dropdown-item>
-                <el-dropdown-item divided>退出登录</el-dropdown-item>
+                <el-dropdown-item command="profile">个人信息</el-dropdown-item>
+                <el-dropdown-item command="password">修改密码</el-dropdown-item>
+                <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -253,8 +305,10 @@ html, body {
 .aside {
   background-color: #001529;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: width 0.3s;
+  height: 100vh;
 }
 
 .logo-container {
@@ -283,6 +337,12 @@ html, body {
   width: 200px;
 }
 
+.el-menu-vertical {
+  border: none;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
 .header {
   background-color: #fff;
   border-bottom: 1px solid #e6e6e6;
@@ -306,8 +366,7 @@ html, body {
 .collapse-btn {
   position: absolute;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: -15px;
   width: 30px;
   height: 30px;
   background-color: #1890ff;
@@ -318,6 +377,7 @@ html, body {
   justify-content: center;
   cursor: pointer;
   z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* 过渡动画 */

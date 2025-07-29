@@ -2,6 +2,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useCustomerDemandStore } from '../stores'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+import CommonPagination from '../components/CommonPagination.vue'
 
 // 获取客户需求状态管理
 const customerDemandStore = useCustomerDemandStore()
@@ -17,10 +19,47 @@ onMounted(() => {
   demandTableData.value = customerDemandStore.demands
   customerOptions.value = customerDemandStore.customers
   productOptions.value = customerDemandStore.products
+  // 初始化分页数据
+  total.value = demandTableData.value.length
+  detailTotal.value = 0
 })
 
 // 表格加载状态
 const tableLoading = ref(false)
+
+// 分页相关
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = ref(0)
+
+// 明细分页相关
+const detailCurrentPage = ref(1)
+const detailPageSize = ref(10)
+const detailTotal = ref(0)
+
+// 分页处理函数
+const handleSizeChange = (val) => {
+  pageSize.value = val
+  currentPage.value = 1
+  // 这里可以添加重新加载数据的逻辑
+}
+
+const handleCurrentChange = (val) => {
+  currentPage.value = val
+  // 这里可以添加重新加载数据的逻辑
+}
+
+// 明细分页处理函数
+const handleDetailSizeChange = (val) => {
+  detailPageSize.value = val
+  detailCurrentPage.value = 1
+  // 这里可以添加重新加载明细数据的逻辑
+}
+
+const handleDetailCurrentChange = (val) => {
+  detailCurrentPage.value = val
+  // 这里可以添加重新加载明细数据的逻辑
+}
 
 // 对话框可见性
 const demandDialogVisible = ref(false)
@@ -295,6 +334,15 @@ const getProductName = (materialCode) => {
           </template>
         </el-table-column>
       </el-table>
+      
+      <!-- 分页 -->
+      <CommonPagination
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </el-card>
     
     <!-- 需求明细 -->
@@ -334,6 +382,15 @@ const getProductName = (materialCode) => {
           </template>
         </el-table-column>
       </el-table>
+      
+      <!-- 明细分页 -->
+      <CommonPagination
+        :current-page="detailCurrentPage"
+        :page-size="detailPageSize"
+        :total="detailTotal"
+        @size-change="handleDetailSizeChange"
+        @current-change="handleDetailCurrentChange"
+      />
     </el-card>
     
     <!-- 新增需求对话框 -->

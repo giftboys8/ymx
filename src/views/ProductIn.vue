@@ -163,19 +163,150 @@ const loadData = () => {
     productInList.value = [
       {
         id: 'PI20230001',
-        productCode: 'P001',
-        productName: '智能控制器',
-        quantity: 50,
-        unit: '个',
-        workOrderNo: 'WO20230501',
-        batchNo: 'B20230501',
+        productCode: 'CELL001',
+        productName: '18650锂离子电芯',
+        quantity: 5000,
+        unit: 'pcs',
+        workOrderNo: 'WO20230601',
+        batchNo: 'CELL20230601',
         oqcStatus: 'passed',
-        storageLocation: 'B-01-01',
-        createTime: '2023-05-01 10:00:00'
+        storageLocation: '电芯成品区-A01',
+        createTime: '2023-06-01 16:00:00'
       },
-      // 更多测试数据...
+      {
+        id: 'PI20230002',
+        productCode: 'CELL002',
+        productName: '21700锂离子电芯',
+        quantity: 3000,
+        unit: 'pcs',
+        workOrderNo: 'WO20230602',
+        batchNo: 'CELL20230602',
+        oqcStatus: 'passed',
+        storageLocation: '电芯成品区-A02',
+        createTime: '2023-06-02 17:30:00'
+      },
+      {
+        id: 'PI20230003',
+        productCode: 'CELL003',
+        productName: '32650磷酸铁锂电芯',
+        quantity: 2000,
+        unit: 'pcs',
+        workOrderNo: 'WO20230603',
+        batchNo: 'CELL20230603',
+        oqcStatus: 'pending',
+        storageLocation: '电芯成品区-A03',
+        createTime: '2023-06-03 18:45:00'
+      },
+      {
+        id: 'PI20230004',
+        productCode: 'MODULE001',
+        productName: '12V 100Ah电池模组',
+        quantity: 500,
+        unit: 'pcs',
+        workOrderNo: 'WO20230604',
+        batchNo: 'MOD20230604',
+        oqcStatus: 'passed',
+        storageLocation: '电池模组区-B01',
+        createTime: '2023-06-04 14:20:00'
+      },
+      {
+        id: 'PI20230005',
+        productCode: 'MODULE002',
+        productName: '24V 50Ah电池模组',
+        quantity: 300,
+        unit: 'pcs',
+        workOrderNo: 'WO20230605',
+        batchNo: 'MOD20230605',
+        oqcStatus: 'passed',
+        storageLocation: '电池模组区-B02',
+        createTime: '2023-06-05 15:35:00'
+      },
+      {
+        id: 'PI20230006',
+        productCode: 'PACK001',
+        productName: '48V 200Ah储能电池包',
+        quantity: 100,
+        unit: 'pcs',
+        workOrderNo: 'WO20230606',
+        batchNo: 'PACK20230606',
+        oqcStatus: 'failed',
+        storageLocation: '电池包成品区-C01',
+        createTime: '2023-06-06 16:50:00'
+      },
+      {
+        id: 'PI20230007',
+        productCode: 'PACK002',
+        productName: '72V 150Ah动力电池包',
+        quantity: 80,
+        unit: 'pcs',
+        workOrderNo: 'WO20230607',
+        batchNo: 'PACK20230607',
+        oqcStatus: 'passed',
+        storageLocation: '电池包成品区-C02',
+        createTime: '2023-06-07 13:15:00'
+      },
+      {
+        id: 'PI20230008',
+        productCode: 'BMS001',
+        productName: 'BMS电池管理系统',
+        quantity: 200,
+        unit: 'pcs',
+        workOrderNo: 'WO20230608',
+        batchNo: 'BMS20230608',
+        oqcStatus: 'passed',
+        storageLocation: 'BMS成品区-D01',
+        createTime: '2023-06-08 11:40:00'
+      },
+      {
+        id: 'PI20230009',
+        productCode: 'CHAR001',
+        productName: '智能充电器',
+        quantity: 150,
+        unit: 'pcs',
+        workOrderNo: 'WO20230609',
+        batchNo: 'CHAR20230609',
+        oqcStatus: 'pending',
+        storageLocation: '充电器成品区-E01',
+        createTime: '2023-06-09 12:25:00'
+      },
+      {
+        id: 'PI20230010',
+        productCode: 'CONV001',
+        productName: 'DC-DC转换器',
+        quantity: 120,
+        unit: 'pcs',
+        workOrderNo: 'WO20230610',
+        batchNo: 'CONV20230610',
+        oqcStatus: 'passed',
+        storageLocation: '转换器成品区-F01',
+        createTime: '2023-06-10 14:10:00'
+      },
+      {
+        id: 'PI20230011',
+        productCode: 'COOL001',
+        productName: '液冷散热系统',
+        quantity: 60,
+        unit: 'pcs',
+        workOrderNo: 'WO20230611',
+        batchNo: 'COOL20230611',
+        oqcStatus: 'passed',
+        storageLocation: '散热系统区-G01',
+        createTime: '2023-06-11 15:55:00'
+      },
+      {
+        id: 'PI20230012',
+        productCode: 'SAFE001',
+        productName: '安全防护模块',
+        quantity: 180,
+        unit: 'pcs',
+        workOrderNo: 'WO20230612',
+        batchNo: 'SAFE20230612',
+        oqcStatus: 'passed',
+        storageLocation: '安全模块区-H01',
+        createTime: '2023-06-12 16:30:00'
+      }
     ]
-    total.value = 100
+    total.value = productInList.value.length
     loading.value = false
   }, 1000)
 }

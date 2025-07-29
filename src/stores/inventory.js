@@ -14,6 +14,56 @@ export const useInventoryStore = defineStore('inventory', {
         notes: '正常到货',
         created_by: 1,
         created_at: '2023-05-15 10:00:00'
+      },
+      {
+        receipt_id: 'MR20230002',
+        receipt_date: '2023-05-18',
+        supplier_id: 'S002',
+        order_id: 'PO20230002',
+        status: '已完成',
+        notes: '锂电池正极材料到货',
+        created_by: 1,
+        created_at: '2023-05-18 09:30:00'
+      },
+      {
+        receipt_id: 'MR20230003',
+        receipt_date: '2023-05-20',
+        supplier_id: 'S003',
+        order_id: 'PO20230003',
+        status: '已完成',
+        notes: '电解液原料到货',
+        created_by: 2,
+        created_at: '2023-05-20 14:15:00'
+      },
+      {
+        receipt_id: 'MR20230004',
+        receipt_date: '2023-05-22',
+        supplier_id: 'S004',
+        order_id: 'PO20230004',
+        status: '进行中',
+        notes: '隔膜材料到货检验中',
+        created_by: 1,
+        created_at: '2023-05-22 11:00:00'
+      },
+      {
+        receipt_id: 'MR20230005',
+        receipt_date: '2023-05-25',
+        supplier_id: 'S001',
+        order_id: 'PO20230005',
+        status: '已完成',
+        notes: '铝箔集流体到货',
+        created_by: 3,
+        created_at: '2023-05-25 16:20:00'
+      },
+      {
+        receipt_id: 'MR20230006',
+        receipt_date: '2023-05-28',
+        supplier_id: 'S002',
+        order_id: 'PO20230006',
+        status: '已完成',
+        notes: '负极石墨材料到货',
+        created_by: 2,
+        created_at: '2023-05-28 10:45:00'
       }
     ],
     materialReceiptItems: [
@@ -27,6 +77,61 @@ export const useInventoryStore = defineStore('inventory', {
         production_date: '2023-05-10',
         expiry_date: '2025-05-10',
         status: '待检'
+      },
+      {
+        item_id: 2,
+        receipt_id: 'MR20230002',
+        material_id: 'BAT001',
+        quantity: 2000,
+        unit: 'kg',
+        batch_number: 'LFP20230518',
+        production_date: '2023-05-15',
+        expiry_date: '2024-05-15',
+        status: '已检验'
+      },
+      {
+        item_id: 3,
+        receipt_id: 'MR20230003',
+        material_id: 'BAT002',
+        quantity: 1500,
+        unit: 'L',
+        batch_number: 'ELE20230520',
+        production_date: '2023-05-18',
+        expiry_date: '2024-05-18',
+        status: '已检验'
+      },
+      {
+        item_id: 4,
+        receipt_id: 'MR20230004',
+        material_id: 'BAT003',
+        quantity: 10000,
+        unit: 'm²',
+        batch_number: 'SEP20230522',
+        production_date: '2023-05-20',
+        expiry_date: '2025-05-20',
+        status: '待检'
+      },
+      {
+        item_id: 5,
+        receipt_id: 'MR20230005',
+        material_id: 'BAT004',
+        quantity: 5000,
+        unit: 'm²',
+        batch_number: 'ALF20230525',
+        production_date: '2023-05-22',
+        expiry_date: '2026-05-22',
+        status: '已检验'
+      },
+      {
+        item_id: 6,
+        receipt_id: 'MR20230006',
+        material_id: 'BAT005',
+        quantity: 3000,
+        unit: 'kg',
+        batch_number: 'GRA20230528',
+        production_date: '2023-05-25',
+        expiry_date: '2025-05-25',
+        status: '已检验'
       }
     ],
     // IQC检验记录
@@ -86,6 +191,50 @@ export const useInventoryStore = defineStore('inventory', {
         status: '已完成',
         created_by: 2,
         created_at: '2023-05-21 16:00:00'
+      },
+      {
+        completion_id: 'PC20230002',
+        production_plan_id: 2,
+        material_code: 'CELL001',
+        completion_date: '2023-05-23',
+        quantity: 5000,
+        yield_rate: 96.5,
+        status: '已完成',
+        created_by: 3,
+        created_at: '2023-05-23 18:30:00'
+      },
+      {
+        completion_id: 'PC20230003',
+        production_plan_id: 3,
+        material_code: 'PACK001',
+        completion_date: '2023-05-25',
+        quantity: 1200,
+        yield_rate: 97.8,
+        status: '已完成',
+        created_by: 2,
+        created_at: '2023-05-25 20:15:00'
+      },
+      {
+        completion_id: 'PC20230004',
+        production_plan_id: 4,
+        material_code: 'CELL002',
+        completion_date: '2023-05-28',
+        quantity: 8000,
+        yield_rate: 95.2,
+        status: '已完成',
+        created_by: 4,
+        created_at: '2023-05-28 17:45:00'
+      },
+      {
+        completion_id: 'PC20230005',
+        production_plan_id: 5,
+        material_code: 'MODULE001',
+        completion_date: '2023-05-30',
+        quantity: 600,
+        yield_rate: 98.3,
+        status: '已完成',
+        created_by: 3,
+        created_at: '2023-05-30 19:20:00'
       }
     ],
     // OQC检验记录
@@ -120,10 +269,16 @@ export const useInventoryStore = defineStore('inventory', {
     ],
     // 库位管理
     storageLocations: [
-      { location_id: 'A区-01-01', location_name: 'A区-01-01', location_type: '原料区', status: '已占用' },
-      { location_id: 'A区-02-01', location_name: 'A区-02-01', location_type: '原料区', status: '已占用' },
-      { location_id: 'B区-01-01', location_name: 'B区-01-01', location_type: '成品区', status: '已占用' },
-      { location_id: 'B区-01-02', location_name: 'B区-01-02', location_type: '成品区', status: '空闲' }
+      { location_id: 'A区-01-01', location_name: 'A区-01-01', location_type: '电池原料区', status: '已占用' },
+      { location_id: 'A区-02-01', location_name: 'A区-02-01', location_type: '电池原料区', status: '已占用' },
+      { location_id: 'A区-03-01', location_name: 'A区-03-01', location_type: '电解液存储区', status: '已占用' },
+      { location_id: 'A区-04-01', location_name: 'A区-04-01', location_type: '隔膜材料区', status: '已占用' },
+      { location_id: 'B区-01-01', location_name: 'B区-01-01', location_type: '电芯成品区', status: '已占用' },
+      { location_id: 'B区-02-01', location_name: 'B区-02-01', location_type: '电芯成品区', status: '已占用' },
+      { location_id: 'C区-01-01', location_name: 'C区-01-01', location_type: '电池模组区', status: '已占用' },
+      { location_id: 'D区-01-01', location_name: 'D区-01-01', location_type: '电池包成品区', status: '已占用' },
+      { location_id: 'E区-01-01', location_name: 'E区-01-01', location_type: 'BMS存储区', status: '空闲' },
+      { location_id: 'F区-01-01', location_name: 'F区-01-01', location_type: '不良品隔离区', status: '空闲' }
     ]
   }),
   

@@ -63,9 +63,14 @@
   }
   
   /* 分页组件优化 */
-  .el-pagination {
+  .pagination-container {
     text-align: center;
-    padding: 10px 0;
+    padding: 15px 0;
+    margin-top: 15px;
+  }
+  
+  .el-pagination {
+    justify-content: center;
   }
   
   .el-pagination .el-pagination__sizes {
@@ -74,6 +79,19 @@
   
   .el-pagination .el-pagination__total {
     display: none;
+  }
+  
+  .el-pagination .el-pager .number {
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
+  }
+  
+  .el-pagination .btn-prev,
+  .el-pagination .btn-next {
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
   }
   
   /* 卡片优化 */

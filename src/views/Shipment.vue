@@ -208,18 +208,150 @@ const loadData = () => {
     shipmentList.value = [
       {
         planId: 'SP20230001',
-        materialCode: 'M001',
-        materialName: '产品A',
-        shipmentDate: '2023-05-10',
-        plannedQuantity: 100,
-        actualQuantity: 98,
-        customer: '客户A',
+        materialCode: 'CELL001',
+        materialName: '18650锂离子电芯',
+        shipmentDate: '2023-06-15',
+        plannedQuantity: 5000,
+        actualQuantity: 4980,
+        customer: '宁德时代新能源',
         status: '已完成',
         logisticsNo: 'SF1234567890',
-        createdAt: '2023-05-07 09:00:00'
+        createdAt: '2023-06-12 09:00:00'
+      },
+      {
+        planId: 'SP20230002',
+        materialCode: 'CELL002',
+        materialName: '21700锂离子电芯',
+        shipmentDate: '2023-06-16',
+        plannedQuantity: 3000,
+        actualQuantity: 2950,
+        customer: '比亚迪电池',
+        status: '已完成',
+        logisticsNo: 'YTO2345678901',
+        createdAt: '2023-06-13 10:30:00'
+      },
+      {
+        planId: 'SP20230003',
+        materialCode: 'MODULE001',
+        materialName: '12V 100Ah电池模组',
+        shipmentDate: '2023-06-18',
+        plannedQuantity: 500,
+        actualQuantity: 0,
+        customer: '中航锂电',
+        status: '待出货',
+        logisticsNo: '',
+        createdAt: '2023-06-14 14:15:00'
+      },
+      {
+        planId: 'SP20230004',
+        materialCode: 'PACK001',
+        materialName: '48V 200Ah储能电池包',
+        shipmentDate: '2023-06-20',
+        plannedQuantity: 100,
+        actualQuantity: 98,
+        customer: '国轩高科',
+        status: '已完成',
+        logisticsNo: 'ZTO3456789012',
+        createdAt: '2023-06-15 11:20:00'
+      },
+      {
+        planId: 'SP20230005',
+        materialCode: 'BMS001',
+        materialName: 'BMS电池管理系统',
+        shipmentDate: '2023-06-22',
+        plannedQuantity: 200,
+        actualQuantity: 195,
+        customer: '欣旺达电子',
+        status: '已完成',
+        logisticsNo: 'JD4567890123',
+        createdAt: '2023-06-16 16:45:00'
+      },
+      {
+        planId: 'SP20230006',
+        materialCode: 'CHAR001',
+        materialName: '智能充电器',
+        shipmentDate: '2023-06-25',
+        plannedQuantity: 150,
+        actualQuantity: 0,
+        customer: '孚能科技',
+        status: '待出货',
+        logisticsNo: '',
+        createdAt: '2023-06-17 08:30:00'
+      },
+      {
+        planId: 'SP20230007',
+        materialCode: 'CONV001',
+        materialName: 'DC-DC转换器',
+        shipmentDate: '2023-06-28',
+        plannedQuantity: 120,
+        actualQuantity: 118,
+        customer: '蜂巢能源',
+        status: '已完成',
+        logisticsNo: 'EMS5678901234',
+        createdAt: '2023-06-18 13:10:00'
+      },
+      {
+        planId: 'SP20230008',
+        materialCode: 'COOL001',
+        materialName: '液冷散热系统',
+        shipmentDate: '2023-06-30',
+        plannedQuantity: 60,
+        actualQuantity: 58,
+        customer: '亿纬锂能',
+        status: '已完成',
+        logisticsNo: 'SF6789012345',
+        createdAt: '2023-06-19 15:25:00'
+      },
+      {
+        planId: 'SP20230009',
+        materialCode: 'CELL003',
+        materialName: '32650磷酸铁锂电芯',
+        shipmentDate: '2023-07-02',
+        plannedQuantity: 2000,
+        actualQuantity: 0,
+        customer: '宁德时代新能源',
+        status: '待出货',
+        logisticsNo: '',
+        createdAt: '2023-06-20 12:40:00'
+      },
+      {
+        planId: 'SP20230010',
+        materialCode: 'MODULE002',
+        materialName: '24V 50Ah电池模组',
+        shipmentDate: '2023-07-05',
+        plannedQuantity: 300,
+        actualQuantity: 295,
+        customer: '比亚迪电池',
+        status: '已完成',
+        logisticsNo: 'YTO7890123456',
+        createdAt: '2023-06-21 17:55:00'
+      },
+      {
+        planId: 'SP20230011',
+        materialCode: 'PACK002',
+        materialName: '72V 150Ah动力电池包',
+        shipmentDate: '2023-07-08',
+        plannedQuantity: 80,
+        actualQuantity: 0,
+        customer: '中航锂电',
+        status: '待出货',
+        logisticsNo: '',
+        createdAt: '2023-06-22 09:15:00'
+      },
+      {
+        planId: 'SP20230012',
+        materialCode: 'SAFE001',
+        materialName: '安全防护模块',
+        shipmentDate: '2023-07-10',
+        plannedQuantity: 180,
+        actualQuantity: 175,
+        customer: '国轩高科',
+        status: '已完成',
+        logisticsNo: 'ZTO8901234567',
+        createdAt: '2023-06-23 14:30:00'
       }
     ]
-    total.value = 100
+    total.value = shipmentList.value.length
     loading.value = false
   }, 1000)
 }

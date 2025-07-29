@@ -170,7 +170,126 @@ const loadData = () => {
         empId: 'EMP001',
         createdAt: '2023-05-01 10:00:00'
       },
-      // 更多测试数据...
+      {
+        planId: 'P20230002',
+        processId: 'PROC004',
+        materialCode: 'CELL001',
+        planDate: '2023-06-20',
+        plannedQuantity: 5000,
+        actualQuantity: 4850,
+        yieldRate: 97,
+        status: '已关闭',
+        empId: 'EMP005',
+        createdAt: '2023-06-18 09:00:00'
+      },
+      {
+        planId: 'P20230003',
+        processId: 'PROC005',
+        materialCode: 'CELL001',
+        planDate: '2023-06-22',
+        plannedQuantity: 4850,
+        actualQuantity: 4800,
+        yieldRate: 98.97,
+        status: '已关闭',
+        empId: 'EMP006',
+        createdAt: '2023-06-20 10:30:00'
+      },
+      {
+        planId: 'P20230004',
+        processId: 'PROC006',
+        materialCode: 'CELL001',
+        planDate: '2023-06-25',
+        plannedQuantity: 4800,
+        actualQuantity: 4750,
+        yieldRate: 98.96,
+        status: '进行中',
+        empId: 'EMP005',
+        createdAt: '2023-06-23 14:15:00'
+      },
+      {
+        planId: 'P20230005',
+        processId: 'PROC007',
+        materialCode: 'CELL002',
+        planDate: '2023-06-28',
+        plannedQuantity: 8000,
+        actualQuantity: 7850,
+        yieldRate: 98.13,
+        status: '已关闭',
+        empId: 'EMP007',
+        createdAt: '2023-06-25 11:20:00'
+      },
+      {
+        planId: 'P20230006',
+        processId: 'PROC008',
+        materialCode: 'CELL002',
+        planDate: '2023-06-30',
+        plannedQuantity: 7850,
+        actualQuantity: 7800,
+        yieldRate: 99.36,
+        status: '进行中',
+        empId: 'EMP008',
+        createdAt: '2023-06-28 16:45:00'
+      },
+      {
+        planId: 'P20230007',
+        processId: 'PROC009',
+        materialCode: 'CELL002',
+        planDate: '2023-07-02',
+        plannedQuantity: 7800,
+        actualQuantity: 0,
+        yieldRate: 0,
+        status: '计划中',
+        empId: 'EMP009',
+        createdAt: '2023-06-30 08:30:00'
+      },
+      {
+        planId: 'P20230008',
+        processId: 'PROC010',
+        materialCode: 'CELL003',
+        planDate: '2023-07-05',
+        plannedQuantity: 6000,
+        actualQuantity: 5900,
+        yieldRate: 98.33,
+        status: '已关闭',
+        empId: 'EMP010',
+        createdAt: '2023-07-02 13:10:00'
+      },
+      {
+        planId: 'P20230009',
+        processId: 'PROC011',
+        materialCode: 'CELL003',
+        planDate: '2023-07-08',
+        plannedQuantity: 5900,
+        actualQuantity: 5850,
+        yieldRate: 99.15,
+        status: '进行中',
+        empId: 'EMP011',
+        createdAt: '2023-07-05 15:25:00'
+      },
+      {
+        planId: 'P20230010',
+        processId: 'PROC012',
+        materialCode: 'MODULE001',
+        planDate: '2023-07-10',
+        plannedQuantity: 600,
+        actualQuantity: 590,
+        yieldRate: 98.33,
+        status: '已关闭',
+        empId: 'EMP012',
+        createdAt: '2023-07-08 12:40:00'
+      },
+      {
+        planId: 'P20230011',
+        processId: 'PROC013',
+        materialCode: 'PACK001',
+        planDate: '2023-07-12',
+        plannedQuantity: 150,
+        actualQuantity: 148,
+        yieldRate: 98.67,
+        status: '已关闭',
+        empId: 'EMP013',
+        createdAt: '2023-07-10 17:55:00'
+      }
     ]
     total.value = 100
     loading.value = false
