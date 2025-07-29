@@ -104,7 +104,7 @@ const handleLogout = () => {
       <div class="logo-container">
         <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
         <span v-if="!isCollapse" class="title">典名</span><br>
-        <span class="subtitle">智能制造管理平台</span>
+        <span class="subtitle">工厂智能管理系统</span>
       </div>
       <el-menu
         :default-active="$route.path"
