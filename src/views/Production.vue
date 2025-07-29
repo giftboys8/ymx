@@ -6,14 +6,14 @@
     </div>
 
     <!-- 排期记录表格 -->
-    <el-table :data="scheduleList" border style="width: 100%" v-loading="loading">
+    <el-table :data="scheduleList" border style="width: 100%" v-loading="loading" class="mobile-responsive-table">
       <el-table-column prop="planId" label="计划ID" width="120" />
-      <el-table-column prop="processId" label="制程ID" width="120" />
-      <el-table-column prop="materialCode" label="物料编码" width="150" />
+      <el-table-column prop="processId" label="制程ID" width="120" class-name="mobile-hidden" />
+      <el-table-column prop="materialCode" label="物料编码" width="150" class-name="mobile-hidden" />
       <el-table-column prop="planDate" label="计划日期" width="120" />
       <el-table-column prop="plannedQuantity" label="计划量" width="100" />
-      <el-table-column prop="actualQuantity" label="实际量" width="100" />
-      <el-table-column prop="yieldRate" label="良率" width="100">
+      <el-table-column prop="actualQuantity" label="实际量" width="100" class-name="mobile-hidden" />
+      <el-table-column prop="yieldRate" label="良率" width="100" class-name="mobile-hidden">
         <template #default="{ row }">
           {{ row.yieldRate }}%
         </template>
@@ -25,12 +25,12 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="empId" label="负责人" width="120" />
-      <el-table-column prop="createdAt" label="创建时间" width="180" />
+      <el-table-column prop="empId" label="负责人" width="120" class-name="mobile-hidden" />
+      <el-table-column prop="createdAt" label="创建时间" width="180" class-name="mobile-hidden" />
       <el-table-column label="操作" width="200" fixed="right">
         <template #default="{ row }">
           <el-button link type="primary" @click="openDialog('edit', row)">编辑</el-button>
-          <el-button link type="primary" @click="openMaterialPlanDialog(row)">物料计划</el-button>
+          <el-button link type="primary" @click="openMaterialPlanDialog(row)" class="mobile-hidden">物料计划</el-button>
           <el-button link type="danger" @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>

@@ -64,7 +64,7 @@ const navigateTo = (path) => {
           </template>
           <div class="pain-points">
             <el-row :gutter="20">
-              <el-col :span="8">
+              <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="pain-point-card">
                   <el-icon class="pain-point-icon"><Warning /></el-icon>
                   <h3>管理不透明</h3>
@@ -75,7 +75,7 @@ const navigateTo = (path) => {
                   </ul>
                 </div>
               </el-col>
-              <el-col :span="8">
+              <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="pain-point-card">
                   <el-icon class="pain-point-icon"><CircleClose /></el-icon>
                   <h3>质量追溯困难</h3>
@@ -86,7 +86,7 @@ const navigateTo = (path) => {
                   </ul>
                 </div>
               </el-col>
-              <el-col :span="8">
+              <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
                 <div class="pain-point-card">
                   <el-icon class="pain-point-icon"><DataLine /></el-icon>
                   <h3>数据采集低效</h3>
@@ -138,7 +138,7 @@ const navigateTo = (path) => {
           </template>
           <div class="data-overview">
             <el-row :gutter="20">
-              <el-col :span="12">
+              <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
                 <div class="data-item">
                   <el-icon><Document /></el-icon>
                   <div class="data-info">
@@ -147,7 +147,7 @@ const navigateTo = (path) => {
                   </div>
                 </div>
               </el-col>
-              <el-col :span="12">
+              <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
                 <div class="data-item">
                   <el-icon><SetUp /></el-icon>
                   <div class="data-info">
@@ -158,7 +158,7 @@ const navigateTo = (path) => {
               </el-col>
             </el-row>
             <el-row :gutter="20" class="mt-20">
-              <el-col :span="12">
+              <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
                 <div class="data-item">
                   <el-icon><ShoppingCart /></el-icon>
                   <div class="data-info">
@@ -167,7 +167,7 @@ const navigateTo = (path) => {
                   </div>
                 </div>
               </el-col>
-              <el-col :span="12">
+              <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
                 <div class="data-item">
                   <el-icon><Van /></el-icon>
                   <div class="data-info">
@@ -393,5 +393,72 @@ const navigateTo = (path) => {
 
 .activity-text {
   color: #606266;
+}
+
+/* 移动端样式优化 */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+  }
+  
+  .welcome-content h1 {
+    font-size: 20px;
+  }
+  
+  .welcome-content p {
+    font-size: 14px;
+  }
+  
+  .pain-point-card {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .pain-point-card h3 {
+    font-size: 16px;
+  }
+  
+  .pain-point-list {
+    font-size: 12px;
+  }
+  
+  .process-flow {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .process-item {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .process-item .arrow-icon {
+    display: none;
+  }
+  
+  .data-item {
+    margin-bottom: 10px;
+    justify-content: center;
+  }
+  
+  .data-value {
+    font-size: 20px;
+  }
+  
+  .data-label {
+    font-size: 12px;
+  }
+  
+  .activity-content {
+    font-size: 12px;
+  }
+  
+  .activity-type {
+    font-size: 11px;
+  }
 }
 </style>

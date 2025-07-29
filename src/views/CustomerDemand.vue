@@ -250,7 +250,7 @@ const getProductName = (materialCode) => {
   <div class="customer-demand-container">
     <el-card>
       <template #header>
-        <div class="card-header">
+        <div class="card-header page-header">
           <span>客户需求计划</span>
           <el-button type="primary" @click="openAddDemandDialog">
             <el-icon><Plus /></el-icon> 新增需求单
@@ -266,6 +266,7 @@ const getProductName = (materialCode) => {
         @row-click="viewDemandDetails"
         row-key="demand_no"
         border
+        class="mobile-responsive-table"
       >
         <el-table-column prop="demand_no" label="需求单号" width="150" />
         <el-table-column label="客户名称" width="180">
@@ -273,8 +274,8 @@ const getProductName = (materialCode) => {
             {{ getCustomerName(row.customer_id) }}
           </template>
         </el-table-column>
-        <el-table-column prop="requester_dept" label="发起方部门" width="120" />
-        <el-table-column prop="requester_name" label="发起方联系人" width="120" />
+        <el-table-column prop="requester_dept" label="发起方部门" width="120" class-name="mobile-hidden" />
+        <el-table-column prop="requester_name" label="发起方联系人" width="120" class-name="mobile-hidden" />
         <el-table-column prop="create_date" label="创建日期" width="120" />
         <el-table-column prop="workflow_status" label="状态" width="100">
           <template #default="{ row }">
@@ -283,7 +284,7 @@ const getProductName = (materialCode) => {
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column label="操作" width="180" fixed="right">
           <template #default="{ row }">
             <el-button size="small" @click.stop="viewDemandDetails(row)">
               查看明细
@@ -299,7 +300,7 @@ const getProductName = (materialCode) => {
     <!-- 需求明细 -->
     <el-card v-if="currentDemand" class="mt-20">
       <template #header>
-        <div class="card-header">
+        <div class="card-header page-header">
           <span>需求明细 - {{ currentDemand.demand_no }}</span>
           <el-button type="primary" @click="openAddDetailDialog">
             <el-icon><Plus /></el-icon> 新增明细
@@ -314,17 +315,18 @@ const getProductName = (materialCode) => {
         v-loading="tableLoading"
         row-key="detail_id"
         border
+        class="mobile-responsive-table"
       >
-        <el-table-column prop="detail_id" label="ID" width="80" />
+        <el-table-column prop="detail_id" label="ID" width="80" class-name="mobile-hidden" />
         <el-table-column label="物料名称" width="180">
           <template #default="{ row }">
             {{ getProductName(row.material_code) }}
           </template>
         </el-table-column>
-        <el-table-column prop="material_code" label="物料编码" width="180" />
+        <el-table-column prop="material_code" label="物料编码" width="180" class-name="mobile-hidden" />
         <el-table-column prop="delivery_date" label="计划日期" width="120" />
         <el-table-column prop="required_qty" label="数量" width="100" />
-        <el-table-column label="操作" width="120">
+        <el-table-column label="操作" width="120" fixed="right">
           <template #default="{ row }">
             <el-button size="small" type="danger" @click="deleteDetail(row)">
               删除

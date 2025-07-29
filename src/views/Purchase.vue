@@ -298,8 +298,8 @@ const changeOrderStatus = (row, status) => {
   <div class="purchase-container">
     <el-card>
       <template #header>
-        <div class="card-header">
-          <span>采购管理</span>
+        <div class="card-header page-header">
+          <span>采购订单管理</span>
           <el-button type="primary" @click="openAddOrderDialog">
             <el-icon><Plus /></el-icon> 新增采购单
           </el-button>
@@ -314,6 +314,7 @@ const changeOrderStatus = (row, status) => {
         @row-click="viewOrderItems"
         row-key="id"
         border
+        class="mobile-responsive-table"
       >
         <el-table-column prop="id" label="采购单号" width="150" />
         <el-table-column label="供应商" width="180">
@@ -322,13 +323,13 @@ const changeOrderStatus = (row, status) => {
           </template>
         </el-table-column>
         <el-table-column prop="order_date" label="订单日期" width="120" />
-        <el-table-column prop="total_amount" label="总金额" width="120">
+        <el-table-column prop="total_amount" label="总金额" width="120" class-name="mobile-hidden">
           <template #default="{ row }">
             {{ row.total_amount.toFixed(2) }}
           </template>
         </el-table-column>
-        <el-table-column prop="payment_terms" label="付款方式" width="120" />
-        <el-table-column prop="delivery_period" label="交货周期" width="120" />
+        <el-table-column prop="payment_terms" label="付款方式" width="120" class-name="mobile-hidden" />
+        <el-table-column prop="delivery_period" label="交货周期" width="120" class-name="mobile-hidden" />
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
             <el-tag :type="row.status === '已下单' ? 'success' : (row.status === '已结算' ? 'info' : 'warning')">
@@ -336,7 +337,7 @@ const changeOrderStatus = (row, status) => {
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="250">
+        <el-table-column label="操作" width="250" fixed="right">
           <template #default="{ row }">
             <el-button size="small" @click.stop="viewOrderItems(row)">
               查看明细
@@ -368,7 +369,7 @@ const changeOrderStatus = (row, status) => {
     <!-- 采购明细 -->
     <el-card v-if="currentOrder" class="mt-20">
       <template #header>
-        <div class="card-header">
+        <div class="card-header page-header">
           <span>采购明细 - {{ currentOrder.id }}</span>
           <el-button type="primary" @click="openAddItemDialog">
             <el-icon><Plus /></el-icon> 新增明细
@@ -383,16 +384,17 @@ const changeOrderStatus = (row, status) => {
         v-loading="tableLoading"
         row-key="id"
         border
+        class="mobile-responsive-table"
       >
-        <el-table-column prop="id" label="ID" width="80" />
+        <el-table-column prop="id" label="ID" width="80" class-name="mobile-hidden" />
         <el-table-column label="物料名称" width="180">
           <template #default="{ row }">
             {{ getMaterialName(row.material_id) }}
           </template>
         </el-table-column>
-        <el-table-column prop="material_id" label="物料编码" width="150" />
+        <el-table-column prop="material_id" label="物料编码" width="150" class-name="mobile-hidden" />
         <el-table-column prop="quantity" label="数量" width="100" />
-        <el-table-column prop="unit_price" label="单价" width="100">
+        <el-table-column prop="unit_price" label="单价" width="100" class-name="mobile-hidden">
           <template #default="{ row }">
             {{ row.unit_price.toFixed(2) }}
           </template>

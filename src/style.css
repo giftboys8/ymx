@@ -77,3 +77,42 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* 移动端全局优化 */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  /* 确保内容不会被遮挡 */
+  #app {
+    overflow-x: hidden;
+  }
+  
+  /* 通用间距优化 */
+  .mt-20 {
+    margin-top: 15px !important;
+  }
+  
+  /* 卡片间距优化 */
+  .el-card + .el-card {
+    margin-top: 15px;
+  }
+  
+  /* 表格操作按钮优化 */
+  .el-table .el-button {
+    padding: 4px 8px;
+    font-size: 12px;
+    margin: 1px;
+  }
+  
+  /* 分页组件移动端优化 */
+  .pagination-container {
+    text-align: center;
+    padding: 15px 0;
+  }
+  
+  .pagination-container .el-pagination {
+    justify-content: center;
+  }
+}
