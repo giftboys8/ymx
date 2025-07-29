@@ -66,9 +66,12 @@ const handleDefectCurrentChange = (val) => {
 // 对话框可见性
 const recordDialogVisible = ref(false)
 const defectDialogVisible = ref(false)
+const defectDetailDialogVisible = ref(false)
 
 // 当前选中的质检记录
 const currentRecord = ref(null)
+// 当前查看缺陷的质检记录
+const viewingRecord = ref(null)
 
 // 新质检记录表单
 const recordForm = reactive({
@@ -324,6 +327,70 @@ const changeRecordResult = (row, result) => {
     message: `质检记录结果已更新为：${result}`
   })
 }
+
+// 查看质检缺陷明细
+const viewDefectDetail = (row) => {
+  // 生成电池制造相关的缺陷数据
+  const batteryDefects = [
+    {
+      defect_id: 1,
+      defect_type: '电芯容量不足',
+      defect_description: '18650电芯实测容量2850mAh，低于标准3000mAh',
+      defect_level: '严重',
+      quantity: 5,
+      location: '生产线A-工位3',
+      corrective_action: '调整电解液配比，重新测试电芯容量',
+      image_url: '/images/defect_capacity.jpg'
+    },
+    {
+      defect_id: 2,
+      defect_type: '隔膜破损',
+      defect_description: 'PE隔膜在卷绕过程中出现微小破损',
+      defect_level: '一般',
+      quantity: 3,
+      location: '生产线B-卷绕工位',
+      corrective_action: '检查卷绕设备张力，更换隔膜材料',
+      image_url: '/images/defect_separator.jpg'
+    },
+    {
+      defect_id: 3,
+      defect_type: '焊接不良',
+      defect_description: '电池包内部连接片焊接强度不足',
+      defect_level: '严重',
+      quantity: 2,
+      location: '组装线-焊接工位',
+      corrective_action: '调整焊接参数，重新培训操作员',
+      image_url: '/images/defect_welding.jpg'
+    },
+    {
+      defect_id: 4,
+      defect_type: 'BMS通讯异常',
+      defect_description: 'BMS与主控制器通讯间歇性中断',
+      defect_level: '一般',
+      quantity: 1,
+      location: '测试工位',
+      corrective_action: '检查通讯线路，更新BMS固件',
+      image_url: '/images/defect_bms.jpg'
+    },
+    {
+      defect_id: 5,
+      defect_type: '外观缺陷',
+      defect_description: '电池包外壳表面有轻微划痕',
+      defect_level: '轻微',
+      quantity: 8,
+      location: '包装工位',
+      corrective_action: '改进包装流程，增加保护措施',
+      image_url: '/images/defect_appearance.jpg'
+    }
+  ]
+  
+  viewingRecord.value = {
+    ...row,
+    product_name: getProductName(row.product_code),
+    defects: batteryDefects.slice(0, Math.floor(Math.random() * 3) + 2) // 随机显示2-4个缺陷
+  }
+  defectDetailDialogVisible.value = true
+}
 </script>
 
 <template>
@@ -376,7 +443,7 @@ const changeRecordResult = (row, result) => {
         <el-table-column prop="inspector" label="检验员" width="100" />
         <el-table-column label="操作" width="250">
           <template #default="{ row }">
-            <el-button size="small" @click.stop="viewDefects(row)">
+            <el-button size="small" @click.stop="viewDefectDetail(row)">
               查看缺陷
             </el-button>
             <el-button 
@@ -595,6 +662,146 @@ const changeRecordResult = (row, result) => {
         </span>
       </template>
     </el-dialog>
+    
+    <!-- 查看质检缺陷明细对话框 -->
+    <el-dialog
+      v-model="defectDetailDialogVisible"
+      title="质检缺陷明细信息"
+      width="80%"
+      :close-on-click-modal="false"
+    >
+      <div v-if="viewingRecord">
+        <!-- 质检记录基本信息 -->
+        <el-card class="mb-20">
+          <template #header>
+            <span>质检基本信息</span>
+          </template>
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>质检单号：</label>
+                <span>{{ viewingRecord.record_id }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>产品名称：</label>
+                <span>{{ viewingRecord.product_name }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>产品编码：</label>
+                <span>{{ viewingRecord.product_code }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>检验日期：</label>
+                <span>{{ viewingRecord.inspection_date }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>检验类型：</label>
+                <el-tag :type="viewingRecord.inspection_type === 'IQC' ? 'primary' : (viewingRecord.inspection_type === 'IPQC' ? 'warning' : 'success')">
+                  {{ viewingRecord.inspection_type }}
+                </el-tag>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>检验员：</label>
+                <span>{{ viewingRecord.inspector }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>批次号：</label>
+                <span>{{ viewingRecord.batch_number }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>抽样数量：</label>
+                <span>{{ viewingRecord.sample_size }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>不良数量：</label>
+                <span>{{ viewingRecord.rejected_qty }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>检验结果：</label>
+                <el-tag :type="viewingRecord.result === 'Pass' ? 'success' : 'danger'">
+                  {{ viewingRecord.result === 'Pass' ? '合格' : '不合格' }}
+                </el-tag>
+              </div>
+            </el-col>
+            <el-col :span="16">
+              <div class="info-item">
+                <label>备注：</label>
+                <span>{{ viewingRecord.remarks || '无' }}</span>
+              </div>
+            </el-col>
+          </el-row>
+        </el-card>
+        
+        <!-- 缺陷明细列表 -->
+        <el-card>
+          <template #header>
+            <span>电池制造缺陷明细</span>
+          </template>
+          <el-table :data="viewingRecord.defects" border style="width: 100%">
+            <el-table-column prop="defect_id" label="缺陷ID" width="80" />
+            <el-table-column prop="defect_type" label="缺陷类型" width="150" />
+            <el-table-column prop="defect_description" label="缺陷描述" min-width="250" />
+            <el-table-column prop="defect_level" label="缺陷等级" width="100">
+              <template #default="{ row }">
+                <el-tag :type="row.defect_level === '轻微' ? 'info' : (row.defect_level === '一般' ? 'warning' : 'danger')">
+                  {{ row.defect_level }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="quantity" label="数量" width="80" />
+            <el-table-column prop="location" label="发现位置" width="150" />
+            <el-table-column prop="corrective_action" label="纠正措施" min-width="200" />
+          </el-table>
+          
+          <!-- 缺陷统计信息 -->
+          <div class="defect-summary mt-20">
+            <el-row :gutter="20">
+              <el-col :span="6">
+                <el-statistic title="总缺陷数" :value="viewingRecord.defects.reduce((sum, item) => sum + item.quantity, 0)" />
+              </el-col>
+              <el-col :span="6">
+                <el-statistic title="严重缺陷" :value="viewingRecord.defects.filter(item => item.defect_level === '严重').reduce((sum, item) => sum + item.quantity, 0)" />
+              </el-col>
+              <el-col :span="6">
+                <el-statistic title="一般缺陷" :value="viewingRecord.defects.filter(item => item.defect_level === '一般').reduce((sum, item) => sum + item.quantity, 0)" />
+              </el-col>
+              <el-col :span="6">
+                <el-statistic title="轻微缺陷" :value="viewingRecord.defects.filter(item => item.defect_level === '轻微').reduce((sum, item) => sum + item.quantity, 0)" />
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="defectDetailDialogVisible = false">关闭</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -616,5 +823,32 @@ const changeRecordResult = (row, result) => {
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.info-item {
+  margin-bottom: 10px;
+}
+
+.info-item label {
+  font-weight: bold;
+  color: #606266;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.defect-summary {
+  padding: 20px;
+  background-color: #f5f7fa;
+  border-radius: 4px;
 }
 </style>

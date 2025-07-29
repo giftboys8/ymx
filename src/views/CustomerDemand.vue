@@ -64,9 +64,12 @@ const handleDetailCurrentChange = (val) => {
 // 对话框可见性
 const demandDialogVisible = ref(false)
 const detailDialogVisible = ref(false)
+const demandDetailDialogVisible = ref(false)
 
 // 当前选中的需求单
 const currentDemand = ref(null)
+// 当前查看明细的需求单
+const viewingDemand = ref(null)
 
 // 新需求表单
 const demandForm = reactive({
@@ -283,6 +286,21 @@ const getProductName = (materialCode) => {
   const product = productOptions.value.find(p => p.material_code === materialCode)
   return product ? product.material_name : ''
 }
+
+// 查看需求单明细
+const viewDemandDetail = (row) => {
+  viewingDemand.value = {
+    ...row,
+    customer_name: getCustomerName(row.customer_id),
+    details: customerDemandStore.demandDetails.filter(
+      detail => detail.demand_no === row.demand_no
+    ).map(detail => ({
+      ...detail,
+      material_name: getProductName(detail.material_code)
+    }))
+  }
+  demandDetailDialogVisible.value = true
+}
 </script>
 
 <template>
@@ -325,7 +343,7 @@ const getProductName = (materialCode) => {
         </el-table-column>
         <el-table-column label="操作" width="180" fixed="right">
           <template #default="{ row }">
-            <el-button size="small" @click.stop="viewDemandDetails(row)">
+            <el-button size="small" @click.stop="viewDemandDetail(row)">
               查看明细
             </el-button>
             <el-button size="small" type="danger" @click.stop="deleteDemand(row)">
@@ -503,6 +521,105 @@ const getProductName = (materialCode) => {
         </span>
       </template>
     </el-dialog>
+    
+    <!-- 查看需求单明细对话框 -->
+    <el-dialog
+      v-model="demandDetailDialogVisible"
+      title="需求单明细信息"
+      width="80%"
+      :close-on-click-modal="false"
+    >
+      <div v-if="viewingDemand">
+        <!-- 需求单基本信息 -->
+        <el-card class="mb-20">
+          <template #header>
+            <span>基本信息</span>
+          </template>
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>需求单号：</label>
+                <span>{{ viewingDemand.demand_no }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>客户名称：</label>
+                <span>{{ viewingDemand.customer_name }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>创建日期：</label>
+                <span>{{ viewingDemand.create_date }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>发起方部门：</label>
+                <span>{{ viewingDemand.requester_dept }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>发起方联系人：</label>
+                <span>{{ viewingDemand.requester_name }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>联系电话：</label>
+                <span>{{ viewingDemand.requester_phone }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>状态：</label>
+                <el-tag :type="viewingDemand.workflow_status === '生效' ? 'success' : 'warning'">
+                  {{ viewingDemand.workflow_status }}
+                </el-tag>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>审批人：</label>
+                <span>{{ viewingDemand.approved_by || '未指定' }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>复核人：</label>
+                <span>{{ viewingDemand.reviewed_by || '未指定' }}</span>
+              </div>
+            </el-col>
+          </el-row>
+        </el-card>
+        
+        <!-- 需求明细列表 -->
+        <el-card>
+          <template #header>
+            <span>需求明细列表</span>
+          </template>
+          <el-table :data="viewingDemand.details" border style="width: 100%">
+            <el-table-column prop="detail_id" label="明细ID" width="80" />
+            <el-table-column prop="material_name" label="物料名称" width="200" />
+            <el-table-column prop="material_code" label="物料编码" width="150" />
+            <el-table-column prop="delivery_date" label="计划日期" width="120" />
+            <el-table-column prop="required_qty" label="需求数量" width="100" />
+            <el-table-column prop="sub_material" label="子物料消耗" min-width="200" />
+          </el-table>
+        </el-card>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="demandDetailDialogVisible = false">关闭</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -524,5 +641,22 @@ const getProductName = (materialCode) => {
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.info-item {
+  margin-bottom: 10px;
+}
+
+.info-item label {
+  font-weight: bold;
+  color: #606266;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
 }
 </style>

@@ -68,9 +68,12 @@ const handleItemCurrentChange = (val) => {
 // 对话框可见性
 const orderDialogVisible = ref(false)
 const itemDialogVisible = ref(false)
+const orderDetailDialogVisible = ref(false)
 
 // 当前选中的采购单
 const currentOrder = ref(null)
+// 当前查看明细的采购单
+const viewingOrder = ref(null)
 
 // 新采购单表单
 const orderForm = reactive({
@@ -330,6 +333,21 @@ const changeOrderStatus = (row, status) => {
     message: `采购单状态已更新为：${status}`
   })
 }
+
+// 查看采购单明细
+const viewOrderDetail = (row) => {
+  viewingOrder.value = {
+    ...row,
+    supplier_name: getSupplierName(row.supplier_id),
+    items: purchaseStore.orderItems.filter(
+      item => item.order_id === row.id
+    ).map(item => ({
+      ...item,
+      material_name: getMaterialName(item.material_id)
+    }))
+  }
+  orderDetailDialogVisible.value = true
+}
 </script>
 
 <template>
@@ -377,7 +395,7 @@ const changeOrderStatus = (row, status) => {
         </el-table-column>
         <el-table-column label="操作" width="250" fixed="right">
           <template #default="{ row }">
-            <el-button size="small" @click.stop="viewOrderItems(row)">
+            <el-button size="small" @click.stop="viewOrderDetail(row)">
               查看明细
             </el-button>
             <el-button 
@@ -595,6 +613,136 @@ const changeOrderStatus = (row, status) => {
         </span>
       </template>
     </el-dialog>
+    
+    <!-- 查看采购单明细对话框 -->
+    <el-dialog
+      v-model="orderDetailDialogVisible"
+      title="采购单明细信息"
+      width="80%"
+      :close-on-click-modal="false"
+    >
+      <div v-if="viewingOrder">
+        <!-- 采购单基本信息 -->
+        <el-card class="mb-20">
+          <template #header>
+            <span>基本信息</span>
+          </template>
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>采购单号：</label>
+                <span>{{ viewingOrder.id }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>供应商：</label>
+                <span>{{ viewingOrder.supplier_name }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>订单日期：</label>
+                <span>{{ viewingOrder.order_date }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>总金额：</label>
+                <span>¥{{ viewingOrder.total_amount.toFixed(2) }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>付款方式：</label>
+                <span>{{ viewingOrder.payment_terms }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>交货周期：</label>
+                <span>{{ viewingOrder.delivery_period }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="8">
+              <div class="info-item">
+                <label>状态：</label>
+                <el-tag :type="viewingOrder.status === '已下单' ? 'success' : (viewingOrder.status === '已结算' ? 'info' : 'warning')">
+                  {{ viewingOrder.status }}
+                </el-tag>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>审批人：</label>
+                <span>{{ viewingOrder.approver || '未指定' }}</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="info-item">
+                <label>复核人：</label>
+                <span>{{ viewingOrder.reviewer || '未指定' }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="24">
+              <div class="info-item">
+                <label>质量要求：</label>
+                <span>{{ viewingOrder.quality_requirements || '无特殊要求' }}</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="mt-10">
+            <el-col :span="12">
+              <div class="info-item">
+                <label>交货要求：</label>
+                <span>{{ viewingOrder.delivery_requirements || '无特殊要求' }}</span>
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="info-item">
+                <label>运输条件：</label>
+                <span>{{ viewingOrder.transport_conditions || '常规运输' }}</span>
+              </div>
+            </el-col>
+          </el-row>
+        </el-card>
+        
+        <!-- 采购明细列表 -->
+        <el-card>
+          <template #header>
+            <span>采购明细列表</span>
+          </template>
+          <el-table :data="viewingOrder.items" border style="width: 100%">
+            <el-table-column prop="id" label="明细ID" width="80" />
+            <el-table-column prop="material_name" label="物料名称" width="200" />
+            <el-table-column prop="material_id" label="物料编码" width="150" />
+            <el-table-column prop="quantity" label="数量" width="100" />
+            <el-table-column prop="unit_price" label="单价" width="120">
+              <template #default="{ row }">
+                ¥{{ row.unit_price.toFixed(2) }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="amount" label="金额" width="120">
+              <template #default="{ row }">
+                ¥{{ row.amount.toFixed(2) }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="remarks" label="备注" min-width="150" />
+          </el-table>
+        </el-card>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="orderDetailDialogVisible = false">关闭</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -616,5 +764,22 @@ const changeOrderStatus = (row, status) => {
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.info-item {
+  margin-bottom: 10px;
+}
+
+.info-item label {
+  font-weight: bold;
+  color: #606266;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
 }
 </style>
