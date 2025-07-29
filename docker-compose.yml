@@ -1,0 +1,12 @@
+services:
+  ymx-web:
+    build: .
+    ports:
+      - "8084:80"
+    container_name: ymx-factory-system
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # 挂载docs目录以确保logo图片可访问
+      - ./docs:/usr/share/nginx/html/docs:ro

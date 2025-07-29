@@ -15,7 +15,8 @@ const handleSelect = (key) => {
     <el-aside width="auto" class="aside">
       <div class="logo-container">
         <!-- <img src="./assets/vue.svg" class="logo" alt="Logo" /> -->
-        <span v-if="!isCollapse" class="title">运美兴</span><br>
+        <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
+        <span v-if="!isCollapse" class="title">典名</span><br>
         <span class="subtitle">工厂智能管理系统</span>
       </div>
       <el-menu
@@ -142,18 +143,18 @@ html, body {
 
 .logo-container {
   height: auto;
-  min-height: 60px;
+  min-height: 80px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 10px 20px;
   color: white;
   background-color: #002140;
 }
 
 .logo {
-  height: 30px;
-  margin-right: 10px;
+  height: 40px;
+  margin-bottom: 5px;
 }
 
 .title {
