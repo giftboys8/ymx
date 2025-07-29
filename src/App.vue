@@ -100,7 +100,7 @@ const handleLogout = () => {
 <template>
   <el-container class="layout-container">
     <!-- 桌面端侧边栏 -->
-    <el-aside v-if="!isMobile" width="auto" class="aside">
+    <el-aside v-if="!isMobile" width="auto" :class="['aside', { collapsed: isCollapse }]">
       <div class="logo-container">
         <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
         <span v-if="!isCollapse" class="title">典名</span><br>
@@ -309,6 +309,11 @@ html, body {
   overflow-x: hidden;
   transition: width 0.3s;
   height: 100vh;
+  width: 200px;
+}
+
+.aside.collapsed {
+  width: 64px;
 }
 
 .logo-container {
@@ -320,6 +325,16 @@ html, body {
   padding: 10px 20px;
   color: white;
   background-color: #002140;
+  transition: all 0.3s;
+}
+
+.aside.collapsed .logo-container {
+  padding: 10px 5px;
+}
+
+.aside.collapsed .logo-container .title,
+.aside.collapsed .logo-container .subtitle {
+  display: none;
 }
 
 .logo {
