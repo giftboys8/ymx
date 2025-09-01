@@ -47,7 +47,7 @@ const navigateTo = (path) => {
       <el-col :span="24">
         <el-card class="welcome-card">
           <div class="welcome-content">
-            <h1>欢迎使用典名工厂智能管理系统</h1>
+            <h1>欢迎使用盈普工厂智能管理系统</h1>
             <p>本系统提供完整的生产管理流程，从客户需求到成品出货的全流程管理</p>
           </div>
         </el-card>

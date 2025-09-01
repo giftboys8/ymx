@@ -70,8 +70,8 @@ const resetForm = (formEl) => {
   <div class="login-container">
     <div class="login-box">
       <div class="login-header">
-        <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
-        <h2>典名工厂智能管理系统</h2>
+        <img src="/docs/yp.jpg" class="logo" alt="盈普Logo" />
+        <h2>盈普工厂智能管理系统</h2>
         <p>Factory Intelligent Management System</p>
       </div>
       

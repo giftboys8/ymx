@@ -79,6 +79,18 @@ const routes = [
     name: 'Report',
     component: () => import('../views/Report.vue'),
     meta: { title: '生产报告', requiresAuth: true }
+  },
+  {
+    path: '/supplier-management',
+    name: 'SupplierManagement',
+    component: () => import('../views/SupplierManagement.vue'),
+    meta: { title: '供应商管理', requiresAuth: true }
+  },
+  {
+    path: '/customer-management',
+    name: 'CustomerManagement',
+    component: () => import('../views/CustomerManagement.vue'),
+    meta: { title: '客户管理', requiresAuth: true }
   }
 ]
 
@@ -91,7 +103,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 设置页面标题
   if (to.meta.title) {
-    document.title = to.meta.title + ' - 典名工厂智能管理系统'
+    document.title = to.meta.title + ' - 盈普工厂智能管理系统'
   }
   
   // 检查登录状态

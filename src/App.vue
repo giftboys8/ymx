@@ -2,6 +2,26 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  HomeFilled,
+  Document,
+  ShoppingCart,
+  Check,
+  Tools,
+  SetUp,
+  Connection,
+  Goods,
+  Box,
+  Van,
+  Lock,
+  DataAnalysis,
+  OfficeBuilding,
+  User,
+  ArrowLeft,
+  ArrowRight,
+  Menu,
+  ArrowDown
+} from '@element-plus/icons-vue'
 
 const router = useRouter()
 const isCollapse = ref(false)
@@ -102,8 +122,8 @@ const handleLogout = () => {
     <!-- 桌面端侧边栏 -->
     <el-aside v-if="!isMobile" width="auto" :class="['aside', { collapsed: isCollapse }]">
       <div class="logo-container">
-        <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
-        <span v-if="!isCollapse" class="title">典名</span><br>
+        <img src="/docs/yp.jpg" class="logo" alt="盈普Logo" />
+        <span v-if="!isCollapse" class="title">盈普</span><br>
         <span class="subtitle">工厂智能管理系统</span>
       </div>
       <el-menu
@@ -162,6 +182,14 @@ const handleLogout = () => {
           <el-icon><DataAnalysis /></el-icon>
           <template #title>生产报告</template>
         </el-menu-item>
+        <el-menu-item index="/supplier-management">
+          <el-icon><OfficeBuilding /></el-icon>
+          <template #title>供应商管理</template>
+        </el-menu-item>
+        <el-menu-item index="/customer-management">
+          <el-icon><User /></el-icon>
+          <template #title>客户管理</template>
+        </el-menu-item>
       </el-menu>
       <div class="collapse-btn" @click="toggleMobileMenu">
         <el-icon v-if="isCollapse"><ArrowRight /></el-icon>
@@ -178,9 +206,9 @@ const handleLogout = () => {
       size="280px"
       class="mobile-drawer">
       <div class="mobile-logo-container">
-        <img src="/docs/dm-logo.png" class="logo" alt="典名Logo" />
+        <img src="/docs/yp.jpg" class="logo" alt="盈普Logo" />
         <div class="mobile-title">
-          <span class="title">典名</span>
+          <span class="title">盈普</span>
           <span class="subtitle">智能制造管理平台</span>
         </div>
       </div>
@@ -238,6 +266,14 @@ const handleLogout = () => {
         <el-menu-item index="/report">
           <el-icon><DataAnalysis /></el-icon>
           <template #title>生产报告</template>
+        </el-menu-item>
+        <el-menu-item index="/supplier-management">
+          <el-icon><OfficeBuilding /></el-icon>
+          <template #title>供应商管理</template>
+        </el-menu-item>
+        <el-menu-item index="/customer-management">
+          <el-icon><User /></el-icon>
+          <template #title>客户管理</template>
         </el-menu-item>
       </el-menu>
     </el-drawer>
