@@ -115,10 +115,7 @@ const resetForm = (formEl) => {
         </el-form-item>
       </el-form>
       
-      <div class="login-footer">
-        <p>默认账号：admin</p>
-        <p>默认密码：admin123</p>
-      </div>
+
     </div>
   </div>
 </template>
@@ -176,16 +173,7 @@ const resetForm = (formEl) => {
   font-weight: 500;
 }
 
-.login-footer {
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-  color: #999;
-  font-size: 12px;
-}
 
-.login-footer p {
-  margin: 5px 0;
-}
 
 /* 移动端适配 */
 @media (max-width: 768px) {
